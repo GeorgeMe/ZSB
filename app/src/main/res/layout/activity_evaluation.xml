@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.dmd.zsb.ui.activity.EvaluationActivity">
+
+    <include
+        layout="@layout/bar_for_evaluation"
+        android:layout_width="match_parent"
+        android:layout_height="48dp" />
+
+    <RadioGroup
+        android:id="@+id/evaluation_menu_group"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/evaluation_group_menu_incomplete"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableBottom="@drawable/radio_button_drawable_bottom"
+            android:drawableTop="@drawable/radio_button_drawable_top"
+            android:gravity="center"
+            android:text="未完成评价（21）"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#aea6a6" />
+
+        <RadioButton
+            android:id="@+id/evaluation_group_menu_recent_completed"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableBottom="@drawable/radio_button_drawable_bottom"
+            android:drawableTop="@drawable/radio_button_drawable_top"
+            android:gravity="center"
+            android:text="已完成评价（22）"
+            android:textSize="12sp" />
+
+        <TextView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="#aea6a6" />
+
+        <RadioButton
+            android:id="@+id/evaluation_group_menu_my_evaluation"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:button="@null"
+            android:drawableBottom="@drawable/radio_button_drawable_bottom"
+            android:drawableTop="@drawable/radio_button_drawable_top"
+            android:gravity="center"
+            android:text="对我的评价（144）"
+            android:textSize="12sp" />
+    </RadioGroup>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#aea6a6" />
+
+
+    <com.dmd.tutor.widgets.XSwipeRefreshLayout
+        android:id="@+id/fragment_evaluation_list_swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <com.dmd.zsb.widgets.LoadMoreListView
+            android:id="@+id/fragment_evaluation_list_list_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:cacheColorHint="@android:color/transparent"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:fadingEdge="none"
+            android:fadingEdgeLength="0dp"
+            android:listSelector="@android:color/transparent"
+            android:overScrollMode="never"
+            android:scrollbars="none" />
+    </com.dmd.tutor.widgets.XSwipeRefreshLayout>
+</LinearLayout>
+
