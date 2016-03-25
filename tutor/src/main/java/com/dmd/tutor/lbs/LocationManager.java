@@ -82,6 +82,8 @@ public  class LocationManager implements BDLocationListener
         sb.append("\nradius : ");
         sb.append(bdLocation.getRadius());
         if (bdLocation.getLocType() == BDLocation.TypeGpsLocation){
+            sb.append("\ngetCityCode : ");
+            sb.append(bdLocation.getCityCode());
             sb.append("\nspeed : ");
             sb.append(bdLocation.getSpeed());
             sb.append("\nsatellite : ");
@@ -101,6 +103,7 @@ public  class LocationManager implements BDLocationListener
             sb.append("\naddr : ");
             sb.append(bdLocation.getAddrStr());
             XmlDB.getInstance(context).saveKey("addr",bdLocation.getAddrStr());
+
         }
 
         latitude = bdLocation.getLatitude();

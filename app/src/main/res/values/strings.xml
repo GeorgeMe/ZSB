@@ -38,7 +38,6 @@
     <string name="haved_account_login_now">已有账户？现在登录</string>
 
     <string name="nickname">昵称</string>
-    <string name="nickname2">昵称</string>
     <string name="confirm_password">确认密码</string>
     <string name="complete_signup">完成注册</string>
 
@@ -56,13 +55,22 @@
     <string name="confirm">确定</string>
     <string name="cancel">取消</string>
 
+    <string name="setting_title">设置</string>
     <string name="avatar">我的头像</string>
-    <string name="brief">我的简介</string>
+    <string name="brief_0">我的简介</string>
     <string name="signature">个性签名</string>
     <string name="changepassword">修改密码</string>
     <string name="feedback">意见反馈</string>
     <string name="aboutus">关于我们</string>
+    <string name="complain">欢迎指导建议！</string>
 
-
+    <string name="older_password">旧密码</string>
+    <string name="input_old_password">输入旧密码</string>
+    <string name="new_password">新密码</string>
+    <string name="input_new_password">输入新密码</string>
+    <string name="confirm_new_password">确认新密码</string>
+    <string name="save">保存</string>
+    <string name="personal_signature">个人签名</string>
+    <string name="personal_brief">个人简介</string>
 
 </resources>

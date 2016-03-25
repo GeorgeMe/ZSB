@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.dmd.zsb.ui.activity.SettingActivity">
-    <include layout="@layout/bar_for_user_detail" />
+    <include layout="@layout/top_view" />
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -79,7 +79,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
         <TextView
-            android:id="@+id/tv_setting_changepassword"
+            android:id="@+id/tv_setting_change_password"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -113,7 +113,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
         <TextView
-            android:id="@+id/tv_setting_aboutus"
+            android:id="@+id/tv_setting_about_us"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -130,7 +130,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"/>
         <Button
-            android:id="@+id/btn_login"
+            android:id="@+id/btn_sign_out"
             android:layout_width="fill_parent"
             android:layout_height="45dp"
             android:layout_marginLeft="20dp"

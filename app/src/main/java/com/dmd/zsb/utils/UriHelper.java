@@ -114,5 +114,9 @@ public class UriHelper {
     public String onAudition(JsonObject json){
         return urlToString(true,ApiConstants.Urls.API_USER_AUDITION,json);
     }
+    //反馈
+    public String seedFeedback(JsonObject json){
+        return urlToString(true,ApiConstants.Urls.API_USER_FEEDBACK,json);
+    }
 
 }

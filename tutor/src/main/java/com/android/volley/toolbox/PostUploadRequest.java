@@ -17,7 +17,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.dmd.tutor.utils.OnUploadProcessListener;
-import com.dmd.tutor.utils.TLog;
 import com.google.gson.Gson;
 
 
@@ -85,20 +84,8 @@ public class PostUploadRequest<T> extends Request<T> {
         if (mListItem == null || mListItem.size() == 0) {
             return super.getBody();
         }
-
         ByteArrayOutputStream bos = new ByteArrayOutputStream();
         try {
- /*             StringBuilder textEntity = new StringBuilder();
-          for (Map.Entry<String, String> entry : params.entrySet()) {//构造文本类型参数的实体数据
-                textEntity.append("--");
-                textEntity.append(BOUNDARY);
-                textEntity.append("\r\n");
-                textEntity.append("Content-Disposition: form-data; name=\"" + entry.getKey() + "\"\r\n\r\n");
-                textEntity.append(entry.getValue());
-                textEntity.append("\r\n");
-            }
-
-            bos.write(textEntity.toString().getBytes("utf-8"));*/
             for (FormFile uploadFile : mListItem) {
                 StringBuilder fileEntity = new StringBuilder();
                 fileEntity.append("--");
@@ -107,7 +94,6 @@ public class PostUploadRequest<T> extends Request<T> {
                 fileEntity.append("Content-Disposition: form-data;name=\"" + uploadFile.getParameterName() + "\";filename=\"" + uploadFile.getFileName() + "\"\r\n");
                 fileEntity.append("Content-Type: " + uploadFile.getContentType() + "\r\n\r\n");
 
-               TLog.writeToFile(fileEntity.toString());
                 bos.write(fileEntity.toString().getBytes());
 
                 onUploadProcessListener.initUpload((int)uploadFile.getFile().length());
@@ -126,19 +112,16 @@ public class PostUploadRequest<T> extends Request<T> {
                     bos.write(uploadFile.getData(), 0, uploadFile.getData().length);
                 }
                 bos.write("\r\n".getBytes());
-                onUploadProcessListener.onUploadDone(1,"上传完成");
+                onUploadProcessListener.onUploadDone(11,"上传完成");
             }
-
             String endLine = "--" + BOUNDARY+"--";
             bos.write(endLine.toString().getBytes("utf-8"));
-            //bos.write("\r\n".getBytes());
         } catch (IOException e) {
+            onUploadProcessListener.onUploadDone(12,"上传失败");
             e.printStackTrace();
         }
         return bos.toByteArray();
     }
-
-    //Content-Type: multipart/form-data; boundary=----------8888888888888
     @Override
     public String getBodyContentType() {
         return MULTIPART_FORM_DATA + "; boundary=" + BOUNDARY;

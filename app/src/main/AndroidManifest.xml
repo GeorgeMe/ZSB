@@ -43,7 +43,12 @@
             android:value="@integer/google_play_services_version" />
 
         <activity android:name=".ui.activity.ParentActivity" />
-        <activity android:name=".ui.activity.SettingActivity"></activity>
+        <activity android:name=".ui.activity.SettingActivity" />
+        <activity android:name=".ui.activity.FeedbackActivity" />
+        <activity android:name=".ui.activity.NickNameActivity" />
+        <activity android:name=".ui.activity.ChangePasswordActivity" />
+        <activity android:name=".ui.activity.SignatureActivity" />
+        <activity android:name=".ui.activity.BriefActivity"></activity>
     </application>
 
 </manifest>

@@ -20,6 +20,7 @@ public class ApiConstants {
         public static final String API_USER_CERTIFY = "user_certify.action?";//认证
         public static final String API_USER_CHANGEPASSWORD = "user_changepassword.action?";//修改密码
         public static final String API_USER_AUDITION = "user_changepassword.action?";//修改密码
+        public static final String API_USER_FEEDBACK = "user_feedback.action?";//反馈
 
 
     }
