@@ -4,7 +4,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.GsonRequest;
 
-import com.dmd.tutor.utils.TLog;
 import com.dmd.zsb.entity.response.HomeResponse;
 import com.dmd.zsb.mvp.interactor.CommonListInteractor;
 import com.dmd.zsb.mvp.listeners.BaseMultiLoadedListener;

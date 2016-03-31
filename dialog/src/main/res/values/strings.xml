@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="title">提示</string>
-    <string name="agree">OK</string>
-    <string name="disagree">NO</string>
+    <string name="title">温馨提示</string>
+    <string name="agree">agree</string>
+    <string name="disagree">disagree</string>
 
     <string name="md_back_label">Back</string>
     <string name="md_done_label">Done</string>

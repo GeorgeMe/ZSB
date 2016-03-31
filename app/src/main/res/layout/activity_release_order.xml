@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.dmd.zsb.ui.activity.ReleaseOrderActivity">
 
-    <include layout="@layout/bar_for_release_order" />
+    <include layout="@layout/top_view" />
 
     <FrameLayout
         android:layout_width="fill_parent"

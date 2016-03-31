@@ -36,10 +36,6 @@ import com.dmd.tutor.R;
 
 import java.util.List;
 
-/**
- * Created by stadiko on 6/8/15.
- * Updated by Mauker on 05/01/16. dd/MM/YY.
- */
 public class MaterialSearchView extends FrameLayout implements Filter.FilterListener {
     public static final int REQUEST_VOICE = 9999;
     public static final int RESULT_OK = -1;

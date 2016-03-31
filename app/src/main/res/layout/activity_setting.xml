@@ -20,7 +20,7 @@
             android:paddingTop="10dp"
             android:gravity="center|left"
             android:drawableRight="@drawable/btn_forward_normal"
-            android:text="@string/nickname2"
+            android:text="@string/nickname"
             android:textColor="@color/alpha_95_black"
             android:textSize="@dimen/big_medium_text" />
         <View

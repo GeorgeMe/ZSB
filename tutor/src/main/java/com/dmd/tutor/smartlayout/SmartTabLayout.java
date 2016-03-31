@@ -1,18 +1,3 @@
-/*
- * Copyright (c) 2015 [1076559197@qq.com | tchen0707@gmail.com]
- *
- * Licensed under the Apache License, Version 2.0 (the "License”);
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *    http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 package com.dmd.tutor.smartlayout;
 
 import android.content.Context;
@@ -43,7 +28,6 @@ import com.dmd.tutor.R;
  * <p>
  * The colors can be customized in two ways. The first and simplest is to provide an array of colors
  * via {@link #setSelectedIndicatorColors(int...)} and {@link #setDividerColors(int...)}. The
- * alternative is via the {@link com.github.obsessive.library.smartlayout.SmartTabLayout.TabColorizer} interface which provides you complete control over
  * which color is used for any individual position.
  * <p>
  * The views used as tabs can be customized by calling {@link #setCustomTabView(int, int)},
@@ -56,7 +40,6 @@ public class SmartTabLayout extends HorizontalScrollView {
 
     /**
      * Allows complete control over the colors drawn in the tab layout. Set with
-     * {@link #setCustomTabColorizer(com.github.obsessive.library.smartlayout.SmartTabLayout.TabColorizer)}.
      */
     public interface TabColorizer {
 
@@ -173,14 +156,12 @@ public class SmartTabLayout extends HorizontalScrollView {
     /**
      * Set the behavior of the Indicator scrolling feedback.
      *
-     * @param interpolator {@link com.github.obsessive.library.smartlayout.SmartTabIndicationInterpolator}
      */
     public void setIndicationInterpolator(SmartTabIndicationInterpolator interpolator) {
         mTabStrip.setIndicationInterpolator(interpolator);
     }
 
     /**
-     * Set the custom {@link com.github.obsessive.library.smartlayout.SmartTabLayout.TabColorizer} to be used.
      *
      * If you only require simple custmisation then you can use
      * {@link #setSelectedIndicatorColors(int...)} and {@link #setDividerColors(int...)} to achieve
@@ -214,7 +195,6 @@ public class SmartTabLayout extends HorizontalScrollView {
     }
 
     /**
-     * Set the {@link ViewPager.OnPageChangeListener}. When using {@link com.github.obsessive.library.smartlayout.SmartTabLayout} you are
      * required to set any {@link ViewPager.OnPageChangeListener} through this method. This is so
      * that the layout can update it's scroll position correctly.
      *

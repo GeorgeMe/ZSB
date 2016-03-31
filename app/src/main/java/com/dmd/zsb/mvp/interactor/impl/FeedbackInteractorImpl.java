@@ -14,6 +14,7 @@ import com.google.gson.reflect.TypeToken;
  * Created by Administrator on 2016/3/25.
  */
 public class FeedbackInteractorImpl implements FeedbackInteractor {
+
     private BaseSingleLoadedListener<JsonObject> loadedListener;
 
     public FeedbackInteractorImpl(BaseSingleLoadedListener<JsonObject> loadedListener) {

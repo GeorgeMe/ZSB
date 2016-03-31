@@ -4,9 +4,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v4.view.ViewPropertyAnimatorListener;
 import android.view.View;
 
-/**
- * Created by stadiko on 6/8/15.
- */
+
 public class AnimationUtil {
 
     public static final int ANIMATION_DURATION_SHORT = 150;

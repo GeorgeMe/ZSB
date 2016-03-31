@@ -23,7 +23,7 @@ public class NickNameInteractorImpl implements NickNameInteractor {
 
     @Override
     public void updateNickName(JsonObject jsonObject) {
-        GsonRequest<JsonObject> gsonRequest=new GsonRequest<JsonObject>(UriHelper.getInstance().seedFeedback(jsonObject),null,new TypeToken<JsonObject>(){}.getType(), new Response.Listener<JsonObject>(){
+        GsonRequest<JsonObject> gsonRequest=new GsonRequest<JsonObject>(UriHelper.getInstance().nickName(jsonObject),null,new TypeToken<JsonObject>(){}.getType(), new Response.Listener<JsonObject>(){
             @Override
             public void onResponse(JsonObject response) {
                 loadedListener.onSuccess(response);
@@ -35,7 +35,7 @@ public class NickNameInteractorImpl implements NickNameInteractor {
             }
         });
         gsonRequest.setShouldCache(true);
-        gsonRequest.setTag("seedFeedback");
+        gsonRequest.setTag("nickName");
         VolleyHelper.getInstance().getRequestQueue().add(gsonRequest);
     }
 

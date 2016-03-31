@@ -10,14 +10,12 @@ import com.dmd.tutor.eventbus.EventCenter;
 import com.dmd.tutor.netstatus.NetUtils;
 import com.dmd.tutor.utils.XmlDB;
 import com.dmd.zsb.R;
-import com.dmd.zsb.mvp.interactor.impl.FeedbackInteractorImpl;
 import com.dmd.zsb.mvp.presenter.impl.FeedbackPresenterImpl;
 import com.dmd.zsb.mvp.view.FeedbackView;
 import com.dmd.zsb.ui.activity.base.BaseActivity;
 import com.google.gson.JsonObject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class FeedbackActivity extends BaseActivity implements FeedbackView {

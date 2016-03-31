@@ -330,7 +330,7 @@ public class SeekFragment extends BaseFragment implements SeekView, LoadMoreList
     }
 
     @Override
-    public void navigateToNewsDetail(int position, UserEntity itemData) {
+    public void navigateToUserDetail(int position, UserEntity itemData) {
         Bundle bundle = new Bundle();
         bundle.putString("teacherId", itemData.getUser_id());
         readyGo(UserDetailActivity.class, bundle);

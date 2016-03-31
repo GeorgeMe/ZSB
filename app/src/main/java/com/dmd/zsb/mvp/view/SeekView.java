@@ -9,7 +9,7 @@ import com.dmd.zsb.entity.response.SeekResponse;
  */
 public interface SeekView extends BaseView {
 
-    void navigateToNewsDetail(int position, UserEntity itemData);
+    void navigateToUserDetail(int position, UserEntity itemData);
 
     void refreshListData(SeekResponse data);
 

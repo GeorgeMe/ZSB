@@ -57,7 +57,7 @@
 
     <string name="setting_title">设置</string>
     <string name="avatar">我的头像</string>
-    <string name="brief_0">我的简介</string>
+    <string name="brief">我的简介</string>
     <string name="signature">个性签名</string>
     <string name="changepassword">修改密码</string>
     <string name="feedback">意见反馈</string>

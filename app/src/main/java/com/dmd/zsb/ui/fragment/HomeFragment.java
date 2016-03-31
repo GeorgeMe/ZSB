@@ -140,8 +140,7 @@ public class HomeFragment extends BaseFragment implements HomeView, LoadMoreList
         barHomeDemand.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //readyGo(ReleaseOrderActivity.class);
-                readyGo(TestActivity.class);
+                readyGo(ReleaseOrderActivity.class);
             }
         });
         mHeaderView = LayoutInflater.from(mContext).inflate(R.layout.tutor_home_list_header, null);

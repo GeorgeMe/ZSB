@@ -23,14 +23,9 @@ import com.google.gson.Gson;
 
 public class PostUploadRequest<T> extends Request<T> {
     private static final String TAG = PostUploadRequest.class.getSimpleName();
-    /**
-     * 正确数据的时候回掉用
-     */
     private Listener<T> mListener;
-    /*请求 数据通过参数的形式传入*/
     private List<FormFile> mListItem;
-   // private Map<String, String> params;
-    private String BOUNDARY = "--------------520-13-14"; //数据分隔线
+    private String BOUNDARY = "--------------520-13-14";
     private String MULTIPART_FORM_DATA = "multipart/form-data";
     private OnUploadProcessListener onUploadProcessListener;
     private Gson mGson = null;
@@ -45,7 +40,6 @@ public class PostUploadRequest<T> extends Request<T> {
         this.mListener = listener;
         this.mListItem = listItem;
         this.mType=type;
-       // this.params = params;
         mGson = new Gson();
         //设置请求的响应事件，因为文件上传需要较长的时间，所以在这里加大了，设为5秒
         setRetryPolicy(new DefaultRetryPolicy(5000, DefaultRetryPolicy.DEFAULT_MAX_RETRIES, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
@@ -61,7 +55,6 @@ public class PostUploadRequest<T> extends Request<T> {
     protected Response<T> parseNetworkResponse(NetworkResponse response) {
         try {
             String jsonString = new String(response.data,HttpHeaderParser.parseCharset(response.headers));
-
             VolleyLog.d(TAG, "response ---> " + jsonString);
             return Response.success((T) mGson.fromJson(jsonString, mType), HttpHeaderParser.parseCacheHeaders(response));
         } catch (UnsupportedEncodingException e) {

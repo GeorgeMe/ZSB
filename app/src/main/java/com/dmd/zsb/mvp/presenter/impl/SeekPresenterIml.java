@@ -49,7 +49,7 @@ public class SeekPresenterIml implements SeekPresenter,BaseMultiLoadedListener<S
 
     @Override
     public void onItemClickListener(int position, UserEntity itemData) {
-        mSeekView.navigateToNewsDetail(position, itemData);
+        mSeekView.navigateToUserDetail(position, itemData);
     }
 
     @Override

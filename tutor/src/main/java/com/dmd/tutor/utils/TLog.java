@@ -22,12 +22,6 @@ import android.util.Log;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 
-/**
- * Author:  Tau.Chen
- * Email:   1076559197@qq.com | tauchen1990@gmail.com
- * Date:    2015/3/10.
- * Description: Log utils
- */
 public class TLog {
     /**
      * This flag to indicate the log is enabled or disabled.

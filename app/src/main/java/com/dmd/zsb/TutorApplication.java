@@ -4,12 +4,6 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Environment;
 import android.telephony.TelephonyManager;
-import android.util.Log;
-
-import com.baidu.location.BDLocation;
-import com.baidu.location.BDLocationListener;
-import com.baidu.location.LocationClient;
-import com.baidu.location.LocationClientOption;
 import com.dmd.tutor.base.BaseAppManager;
 import com.dmd.tutor.lbs.LocationManager;
 import com.dmd.tutor.utils.TLog;

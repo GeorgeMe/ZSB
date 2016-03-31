@@ -12,7 +12,10 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!-- 引导页 -->
         <activity android:name=".ui.activity.LeadActivity" />
+        <!-- launcher -->
         <activity android:name=".ui.activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,35 +23,52 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <!-- 注册 -->
         <activity android:name=".ui.activity.SignUpActivity" />
+        <!-- 登录 -->
         <activity android:name=".ui.activity.SignInActivity" />
-        <activity android:name=".ui.activity.MainActivity" />
+        <!-- 验证码 -->
         <activity android:name=".ui.activity.SignUpVerifyActivity" />
+        <!-- 主activity -->
+        <activity android:name=".ui.activity.MainActivity" />
+        <!-- 用户详情 -->
         <activity android:name=".ui.activity.UserDetailActivity" />
+        <!-- 需求列表 -->
         <activity android:name=".ui.activity.DemandActivity" />
+        <!-- 搜索 -->
         <activity android:name=".ui.activity.MaterialSearchActivity" />
+        <!-- 钱包 -->
         <activity android:name=".ui.activity.WalletActivity" />
+        <!-- 订单 -->
         <activity android:name=".ui.activity.OrderActivity" />
+        <!-- 评论 -->
         <activity android:name=".ui.activity.EvaluationActivity" />
+        <!-- 代金券 -->
         <activity android:name=".ui.activity.VouchersActivity" />
+        <!-- 关于我们 -->
         <activity android:name=".ui.activity.AboutUsActivity" />
+        <!-- 发布需求 -->
         <activity android:name=".ui.activity.ReleaseOrderActivity" />
+        <!-- 测试 -->
         <activity android:name=".ui.activity.TestActivity" />
-        <!--
- ATTENTION: This was auto-generated to add Google Play services to your project for
-     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information.
-        -->
-        <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
 
+        <!-- 父母 -->
         <activity android:name=".ui.activity.ParentActivity" />
+        <!-- 设置 -->
         <activity android:name=".ui.activity.SettingActivity" />
+        <!-- 反馈 -->
         <activity android:name=".ui.activity.FeedbackActivity" />
+        <!-- 昵称 -->
         <activity android:name=".ui.activity.NickNameActivity" />
+        <!-- 修改密码 -->
         <activity android:name=".ui.activity.ChangePasswordActivity" />
+        <!-- 签名 -->
         <activity android:name=".ui.activity.SignatureActivity" />
-        <activity android:name=".ui.activity.BriefActivity"></activity>
+        <!-- 简介 -->
+        <activity android:name=".ui.activity.BriefActivity" />
+        <activity android:name=".ui.activity.DemandDetailActivity" />
+        <activity android:name=".ui.activity.EvaluationDetailActivity" />
+        <activity android:name=".ui.activity.OrderDetailActivity"></activity>
     </application>
 
 </manifest>

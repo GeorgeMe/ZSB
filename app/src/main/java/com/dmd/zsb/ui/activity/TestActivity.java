@@ -13,7 +13,6 @@ import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.android.volley.FormImage;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.PostUploadRequest;
@@ -23,16 +22,13 @@ import com.dmd.tutor.utils.OnUploadProcessListener;
 import com.dmd.tutor.utils.Tools;
 import com.dmd.tutor.utils.XmlDB;
 import com.dmd.zsb.R;
-import com.dmd.zsb.api.ApiConstants;
 import com.android.volley.FormFile;
-import com.dmd.zsb.utils.SocketHttpRequester;
 import com.dmd.zsb.utils.UriHelper;
 import com.dmd.zsb.utils.VolleyHelper;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import java.io.File;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -108,11 +104,7 @@ public class TestActivity extends Activity implements OnUploadProcessListener {
                     }
 
                     Log.v("zms", "begin uploadFile....");
-                   // UploadUtil uploadUtil = UploadUtil.getInstance();
-                    //设置监听器监听上传状态
-                    //uploadUtil.setOnUploadProcessListener(TestActivity.this);
-                   // String filepath = file.getAbsolutePath();
-                    //uploadUtil.uploadFile(filepath, "img", ApiConstants.Urls.serverURL, params);
+
                     dialog= new MaterialDialog.Builder(TestActivity.this)
                             .title("进度")
                             .content("请稍后...")
@@ -138,9 +130,7 @@ public class TestActivity extends Activity implements OnUploadProcessListener {
                     List<FormFile> formImages=new ArrayList<>();
 
                     FormFile formfile1 = new FormFile(file.getName(), file,"file", "application/octet-stream");
-                   // FormFile formfile2 = new FormFile(file.getName(), file,"file", "application/octet-stream");
                     formImages.add(formfile1);
-                   // formImages.add(formfile2);
                     PostUploadRequest<JsonObject> postUploadRequest=new PostUploadRequest<JsonObject>(UriHelper.getInstance().changeAvatar(jsonObject), formImages,new TypeToken<JsonObject>(){}.getType(), new Response.Listener<JsonObject>() {
                         @Override
                         public void onResponse(JsonObject response) {
@@ -198,30 +188,6 @@ public class TestActivity extends Activity implements OnUploadProcessListener {
         }
 
     };
-    public String uploadFile(File imageFile) {
-
-        try {
-            String requestUrl = "http://192.168.0.104:8080/LoginService/upload/upload/execute.do";
-            // 请求普通信息
-            Map params = new HashMap();
-            params.put("username", "张三");
-            params.put("pwd", "张三");
-            params.put("age", "张三");
-            params.put("fileName", imageFile.getName());
-            // 上传文件
-            FormFile formfile = new FormFile(imageFile.getName(), imageFile,"image", "application/octet-stream");
-            SocketHttpRequester socketHttpRequester= SocketHttpRequester.getInstance();
-            socketHttpRequester.setOnUploadProcessListener(TestActivity.this);
-            /*socketHttpRequester.uploadFile(ApiConstants.Urls.serverURL, params, formfile);*/
-
-        } catch (Exception e) {
-            Log.i("", "upload error");
-            e.printStackTrace();
-        }
-
-        Log.i("", "upload end");
-        return "OK";
-    }
     @Override
     public void onUploadDone(int responseCode, String message) {
         Log.v("zms", "onUploadDone " + message);
