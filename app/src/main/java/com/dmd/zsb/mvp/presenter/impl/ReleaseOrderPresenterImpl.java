@@ -30,7 +30,7 @@ public class ReleaseOrderPresenterImpl implements ReleaseOrderPresenter ,BaseSin
 
     @Override
     public void onSuccess(JsonObject data) {
-        releaseOrderView.showSuccessView();
+        releaseOrderView.showSuccessView(data);
     }
 
     @Override

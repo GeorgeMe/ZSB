@@ -69,6 +69,7 @@
         <activity android:name=".ui.activity.DemandDetailActivity" />
         <activity android:name=".ui.activity.EvaluationDetailActivity" />
         <activity android:name=".ui.activity.OrderDetailActivity"></activity>
+        <activity android:name="com.mob.tools.MobUIShell"/>
     </application>
 
 </manifest>

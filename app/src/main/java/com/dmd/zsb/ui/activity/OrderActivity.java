@@ -19,6 +19,7 @@ import com.dmd.tutor.netstatus.NetUtils;
 import com.dmd.tutor.utils.XmlDB;
 import com.dmd.tutor.widgets.XSwipeRefreshLayout;
 import com.dmd.zsb.R;
+import com.dmd.zsb.api.ApiConstants;
 import com.dmd.zsb.common.Constants;
 import com.dmd.zsb.entity.OrderEntity;
 import com.dmd.zsb.entity.response.OrderResponse;
@@ -27,12 +28,13 @@ import com.dmd.zsb.mvp.view.OrderView;
 import com.dmd.zsb.ui.activity.base.BaseActivity;
 import com.dmd.zsb.widgets.LoadMoreListView;
 import com.google.gson.JsonObject;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class OrderActivity extends BaseActivity implements OrderView,LoadMoreListView.OnLoadMoreListener,SwipeRefreshLayout.OnRefreshListener,AdapterView.OnItemClickListener {
+public class OrderActivity extends BaseActivity implements OrderView, LoadMoreListView.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
 
     @Bind(R.id.my_order_menu_group)
     RadioGroup myOrderMenuGroup;
@@ -49,16 +51,11 @@ public class OrderActivity extends BaseActivity implements OrderView,LoadMoreLis
 
     private OrderPresenterImpl orderPresenter;
     private ListViewDataAdapter<OrderEntity> mListViewAdapter;
-    private int page=0;
+    private int page = 0;
 
     @Override
     protected void getBundleExtras(Bundle extras) {
-        orderPresenter = new OrderPresenterImpl(mContext, this);
-        JsonObject jsonObject=new JsonObject();
-        jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
-        jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
-        jsonObject.addProperty("","");
-        orderPresenter.onOrder(Constants.EVENT_REFRESH_DATA,jsonObject);
+
     }
 
     @Override
@@ -78,30 +75,65 @@ public class OrderActivity extends BaseActivity implements OrderView,LoadMoreLis
 
     @Override
     protected void initViewsAndEvents() {
-        mListViewAdapter=new ListViewDataAdapter<OrderEntity>(new ViewHolderCreator<OrderEntity>(){
+        orderPresenter = new OrderPresenterImpl(mContext, this);
+        if (NetUtils.isNetworkConnected(mContext)) {
+            if (null != fragmentMyOrderListSwipeLayout) {
+                fragmentMyOrderListSwipeLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        JsonObject jsonObject = new JsonObject();
+                        jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
+                        jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
+                        orderPresenter.onOrder(Constants.EVENT_REFRESH_DATA, jsonObject);
+                    }
+                }, ApiConstants.Integers.PAGE_LAZY_LOAD_DELAY_TIME_MS);
+            }
+        } else {
+            toggleNetworkError(true, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
+                    jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
+                    orderPresenter.onOrder(Constants.EVENT_REFRESH_DATA, jsonObject);
+                }
+            });
+        }
+        mListViewAdapter = new ListViewDataAdapter<OrderEntity>(new ViewHolderCreator<OrderEntity>() {
             @Override
             public ViewHolderBase<OrderEntity> createViewHolder(int position) {
                 return new ViewHolderBase<OrderEntity>() {
                     ImageView img_header;
-                    TextView tv_name,tv_type,tv_sex,tv_appointed_time,tv_charging,tv_curriculum,tv_address,tv_place,tv_state;
+                    TextView tv_name, tv_type, tv_sex, tv_appointed_time, tv_charging, tv_curriculum, tv_address, tv_place, tv_state;
+
                     @Override
                     public View createView(LayoutInflater layoutInflater) {
-                        View view=layoutInflater.inflate(R.layout.order_list_item,null);
-                        img_header=ButterKnife.findById(view, R.id.img_header);
-                        tv_type=ButterKnife.findById(view, R.id.tv_type);
-                        tv_sex=ButterKnife.findById(view, R.id.tv_sex);
-                        tv_appointed_time=ButterKnife.findById(view, R.id.tv_appointed_time);
-                        tv_charging=ButterKnife.findById(view, R.id.tv_charging);
-                        tv_curriculum=ButterKnife.findById(view, R.id.tv_curriculum);
-                        tv_address=ButterKnife.findById(view, R.id.tv_address);
-                        tv_place=ButterKnife.findById(view, R.id.tv_place);
-                        tv_state=ButterKnife.findById(view, R.id.tv_state);
-                        return null;
+                        View view = layoutInflater.inflate(R.layout.order_list_item, null);
+                        img_header = ButterKnife.findById(view, R.id.img_header);
+                        tv_name = ButterKnife.findById(view, R.id.tv_name);
+                        tv_type = ButterKnife.findById(view, R.id.tv_type);
+                        tv_sex = ButterKnife.findById(view, R.id.tv_sex);
+                        tv_appointed_time = ButterKnife.findById(view, R.id.tv_appointed_time);
+                        tv_charging = ButterKnife.findById(view, R.id.tv_charging);
+                        tv_curriculum = ButterKnife.findById(view, R.id.tv_curriculum);
+                        tv_address = ButterKnife.findById(view, R.id.tv_address);
+                        tv_place = ButterKnife.findById(view, R.id.tv_place);
+                        tv_state = ButterKnife.findById(view, R.id.tv_state);
+                        return view;
                     }
 
                     @Override
                     public void showData(int position, OrderEntity itemData) {
-
+                        Picasso.with(mContext).load(itemData.getImg_header()).into(img_header);
+                        tv_name.setText(itemData.getName());
+                        tv_type.setText(itemData.getType());
+                        tv_sex.setText(itemData.getSex());
+                        tv_appointed_time.setText(itemData.getAppointed_time());
+                        tv_charging.setText(itemData.getCharging());
+                        tv_curriculum.setText(itemData.getCurriculum());
+                        tv_address.setText(itemData.getAddress());
+                        tv_place.setText(itemData.getPlace());
+                        tv_state.setText(itemData.getState());
                     }
                 };
             }
@@ -191,26 +223,24 @@ public class OrderActivity extends BaseActivity implements OrderView,LoadMoreLis
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        OrderEntity orderEntity=(OrderEntity)parent.getItemAtPosition(position);
+        OrderEntity orderEntity = (OrderEntity) parent.getItemAtPosition(position);
         navigateToOrderDetail(orderEntity);
     }
 
     @Override
     public void onLoadMore() {
-        JsonObject jsonObject=new JsonObject();
+        JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
         jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
-        jsonObject.addProperty("","");
-        orderPresenter.onOrder(Constants.EVENT_LOAD_MORE_DATA,jsonObject);
+        orderPresenter.onOrder(Constants.EVENT_LOAD_MORE_DATA, jsonObject);
     }
 
     @Override
     public void onRefresh() {
-        JsonObject jsonObject=new JsonObject();
+        JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
         jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
-        jsonObject.addProperty("","");
-        orderPresenter.onOrder(Constants.EVENT_REFRESH_DATA,jsonObject);
+        orderPresenter.onOrder(Constants.EVENT_REFRESH_DATA, jsonObject);
     }
 
     @OnClick({R.id.bar_my_order_back, R.id.my_order_group_menu_incomplete, R.id.my_order_group_menu_recent_completed})
@@ -220,18 +250,16 @@ public class OrderActivity extends BaseActivity implements OrderView,LoadMoreLis
                 finish();
                 break;
             case R.id.my_order_group_menu_incomplete:
-                JsonObject incomplete=new JsonObject();
+                JsonObject incomplete = new JsonObject();
                 incomplete.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
                 incomplete.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
-                incomplete.addProperty("","");
-                orderPresenter.onOrder(Constants.EVENT_REFRESH_DATA,incomplete);
+                orderPresenter.onOrder(Constants.EVENT_REFRESH_DATA, incomplete);
                 break;
             case R.id.my_order_group_menu_recent_completed:
-                JsonObject recent_completed=new JsonObject();
+                JsonObject recent_completed = new JsonObject();
                 recent_completed.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
                 recent_completed.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
-                recent_completed.addProperty("","");
-                orderPresenter.onOrder(Constants.EVENT_REFRESH_DATA,recent_completed);
+                orderPresenter.onOrder(Constants.EVENT_REFRESH_DATA, recent_completed);
                 break;
         }
     }

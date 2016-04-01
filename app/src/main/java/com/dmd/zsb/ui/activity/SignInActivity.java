@@ -2,6 +2,7 @@ package com.dmd.zsb.ui.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -15,6 +16,7 @@ import com.dmd.tutor.netstatus.NetUtils;
 import com.dmd.tutor.utils.CommonUtils;
 import com.dmd.tutor.utils.XmlDB;
 import com.dmd.zsb.R;
+import com.dmd.zsb.common.Constants;
 import com.dmd.zsb.mvp.presenter.impl.SignInPresenterImpl;
 import com.dmd.zsb.mvp.view.SignInView;
 import com.dmd.zsb.ui.activity.base.BaseActivity;
@@ -22,7 +24,14 @@ import com.dmd.zsb.widgets.ToastView;
 import com.google.gson.JsonObject;
 import com.squareup.otto.Subscribe;
 
+import java.util.HashMap;
+import java.util.Random;
+
 import butterknife.Bind;
+import cn.smssdk.EventHandler;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.gui.RegisterPage;
+
 public class SignInActivity extends BaseActivity implements SignInView, View.OnClickListener {
 
     @Bind(R.id.et_mobile)
@@ -104,15 +113,14 @@ public class SignInActivity extends BaseActivity implements SignInView, View.OnC
     @Override
     public void onClick(View v) {
 
-
         String mobile = etMobile.getText().toString();
         String password = etPassword.getText().toString();
 
-
         switch (v.getId()) {
             case R.id.tv_signup:
-                readyGoThenKill(SignUpVerifyActivity.class);
+                // 打开注册页面
                 CloseKeyBoard();
+                readyGoThenKill(SignUpVerifyActivity.class);
                 break;
             case R.id.btn_login:
                 if ("".equals(mobile)) {
@@ -145,7 +153,10 @@ public class SignInActivity extends BaseActivity implements SignInView, View.OnC
                 break;
         }
     }
-
+    // 提交用户信息
+    private void registerUser(String country, String phone) {
+        Log.e(TAG_LOG,country+"----"+phone);
+    }
     // 关闭键盘
     private void CloseKeyBoard() {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -162,5 +173,4 @@ public class SignInActivity extends BaseActivity implements SignInView, View.OnC
         XmlDB.getInstance(mContext).saveKey("password", password);
         readyGoThenKill(MainActivity.class);
     }
-
 }

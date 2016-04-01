@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.dmd.dialog.AlertDialogWrapper;
+import com.dmd.dialog.MaterialDialog;
 import com.dmd.tutor.eventbus.EventCenter;
 import com.dmd.tutor.netstatus.NetUtils;
 import com.dmd.tutor.timepicker.ScreenInfo;
@@ -52,7 +54,6 @@ public class ReleaseOrderActivity extends BaseActivity implements ReleaseOrderVi
     TextView topBarTitle;
     private SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
     private WheelMain mWheelMain;
-
 
     private ReleaseOrderPresenterImpl releaseOrderPresenter;
 
@@ -138,22 +139,67 @@ public class ReleaseOrderActivity extends BaseActivity implements ReleaseOrderVi
                 appointmentTime();
                 break;
             case R.id.publish_order_publish:
-                JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
-                jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
-                jsonObject.addProperty("order_price", publishOrderPrice.getText().toString());
-                jsonObject.addProperty("text", publishOrderText.getText().toString());
-                jsonObject.addProperty("location", publishOrderLocation.getText().toString());
-                jsonObject.addProperty("order_time", publishOrderTime.getText().toString());
-                releaseOrderPresenter.onReleaseOrder(jsonObject);
+
+                int num = 0;
+                try {    // 判断预约时间是否大于当前时间
+                    Date date = new Date();
+                    Date date1 = mFormat.parse(mFormat.format(date));
+                    Date date2 = mFormat.parse(publishOrderTime.getText().toString());
+                    num = date2.compareTo(date1);
+
+                    if (num < 0) {
+                        long diff = date1.getTime() - date2.getTime();
+                        long mins = diff / (1000 * 60);
+                        if (mins < 3) {
+                            num = 1;
+                        }
+                    }
+                } catch (ParseException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+                if (publishOrderPrice.getText().toString().equals("")) {
+                    showToast(getString(R.string.price_range));
+                } else if (publishOrderPrice.getText().toString().equals("0.")) {
+                    showToast(getString(R.string.right_price));
+                } else if (publishOrderTime.getText().toString().equals("")) {
+                    showToast(getString(R.string.appoint_time));
+                } else if (num < 0) {
+                    showToast(getString(R.string.wrong_appoint_time_hint));
+                } else if (publishOrderLocation.getText().toString().equals("")) {
+                    showToast(getString(R.string.appoint_location_hint));
+                } else {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
+                    jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
+                    jsonObject.addProperty("lon", XmlDB.getInstance(mContext).getKeyFloatValue("longitude", 0));
+                    jsonObject.addProperty("lat", XmlDB.getInstance(mContext).getKeyFloatValue("latitude", 0));
+                    jsonObject.addProperty("offer_price", publishOrderPrice.getText().toString());
+                    jsonObject.addProperty("appointment_time", publishOrderTime.getText().toString());
+                    jsonObject.addProperty("text", publishOrderText.getText().toString());
+                    jsonObject.addProperty("curriculum_id", "402881e9534ff7ee01534ff8d7d50000");
+                    jsonObject.addProperty("location", publishOrderLocation.getText().toString());
+                    releaseOrderPresenter.onReleaseOrder(jsonObject);
+               }
+
                 break;
         }
     }
 
 
     @Override
-    public void showSuccessView() {
-
+    public void showSuccessView(JsonObject data) {
+        new AlertDialogWrapper.Builder(this)
+                .setTitle(R.string.title)
+                .setMessage(data.get("message").toString())
+                .setNegativeButton(R.string.confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        finish();
+                    }
+                }).show();
     }
 
     @Override
@@ -204,7 +250,5 @@ public class ReleaseOrderActivity extends BaseActivity implements ReleaseOrderVi
                 })
                 .show();
     }
-
-
 
 }

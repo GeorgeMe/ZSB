@@ -73,4 +73,13 @@
     <string name="personal_signature">个人签名</string>
     <string name="personal_brief">个人简介</string>
 
+    <string name="price_range">"请输入价格范围"</string>
+    <string name="right_price">"请输入正确价格"</string>
+    <string name="appoint_time">"请选择预约时间"</string>
+    <string name="wrong_appoint_time_hint">"预约时间要大于当前时间"</string>
+
+    <string name="appoint_location_hint">"请输入预约地点"</string>
+    <string name="get_verify_code_again">重新获取验证码</string>
+    <string name="resend_after">秒后重新发送</string>
+
 </resources>

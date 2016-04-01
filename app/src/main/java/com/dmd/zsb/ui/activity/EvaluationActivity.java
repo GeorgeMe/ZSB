@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -25,8 +26,10 @@ import com.dmd.zsb.mvp.view.EvaluationView;
 import com.dmd.zsb.ui.activity.base.BaseActivity;
 import com.dmd.zsb.widgets.LoadMoreListView;
 import com.google.gson.JsonObject;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class EvaluationActivity extends BaseActivity implements EvaluationView ,LoadMoreListView.OnLoadMoreListener,SwipeRefreshLayout.OnRefreshListener,AdapterView.OnItemClickListener{
@@ -78,19 +81,44 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
     @Override
     protected void initViewsAndEvents() {
         mListViewAdapter=new ListViewDataAdapter<EvaluationEntity>(new ViewHolderCreator<EvaluationEntity>(){
+
+
             @Override
             public ViewHolderBase<EvaluationEntity> createViewHolder(int position) {
+
+
                 return new ViewHolderBase<EvaluationEntity>(){
+                    ImageView img_header;
+                    TextView tv_name, tv_type, tv_sex, tv_appointed_time, tv_charging, tv_curriculum,tv_note,tv_comment_level;
                     //定义UI控件
                     @Override
                     public View createView(LayoutInflater layoutInflater) {
                        // 实例化UI控件
-                        return null;
+                        View view = layoutInflater.inflate(R.layout.evaluation_list_item, null);
+                        img_header = ButterKnife.findById(view, R.id.img_header);
+                        tv_name = ButterKnife.findById(view, R.id.tv_name);
+                        tv_type = ButterKnife.findById(view, R.id.tv_type);
+                        tv_sex = ButterKnife.findById(view, R.id.tv_sex);
+                        tv_appointed_time = ButterKnife.findById(view, R.id.tv_appointed_time);
+                        tv_charging = ButterKnife.findById(view, R.id.tv_charging);
+                        tv_curriculum = ButterKnife.findById(view, R.id.tv_curriculum);
+                        tv_note = ButterKnife.findById(view, R.id.tv_note);
+                        tv_comment_level = ButterKnife.findById(view, R.id.tv_comment_level);
+                        return view;
                     }
 
                     @Override
                     public void showData(int position, EvaluationEntity itemData) {
                         //数据展示set
+                        Picasso.with(mContext).load(itemData.getImg_header()).into(img_header);
+                        tv_name.setText(itemData.getName());
+                        tv_type.setText(itemData.getType());
+                        tv_sex.setText(itemData.getSex());
+                        tv_appointed_time.setText(itemData.getAppointed_time());
+                        tv_charging.setText(itemData.getCharging());
+                        tv_curriculum.setText(itemData.getCurriculum());
+                        tv_note.setText(itemData.getNote());
+                        tv_comment_level.setText(itemData.getComment_level());
                     }
                 };
             }

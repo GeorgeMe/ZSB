@@ -5,6 +5,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dmd.tutor.adapter.ListViewDataAdapter;
@@ -23,6 +24,7 @@ import com.dmd.zsb.mvp.view.VouchersView;
 import com.dmd.zsb.ui.activity.base.BaseActivity;
 import com.dmd.zsb.widgets.LoadMoreListView;
 import com.google.gson.JsonObject;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -71,15 +73,17 @@ public class VouchersActivity extends BaseActivity implements VouchersView,LoadM
             @Override
             public ViewHolderBase<VouchersEntity> createViewHolder(int position) {
                 return new ViewHolderBase<VouchersEntity>() {
-
+                    ImageView img_vouchers;
                     @Override
                     public View createView(LayoutInflater layoutInflater) {
-                        return null;
+                        View view=layoutInflater.inflate(R.layout.vouchers_list_item,null);
+                        img_vouchers = ButterKnife.findById(view, R.id.img_vouchers);
+                        return view;
                     }
 
                     @Override
                     public void showData(int position, VouchersEntity itemData) {
-
+                        Picasso.with(mContext).load(itemData.getImg_path()).into(img_vouchers);
                     }
                 };
             }

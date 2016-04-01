@@ -4,7 +4,7 @@ public class ApiConstants {
 
     public static final class Urls {
 
-        public static final String API_BASE_URLS = "http://192.168.1.111:8080/TutorClient/";
+        public static final String API_BASE_URLS = "http://192.168.1.105:8080/TutorClient/";
         public static final String API_USER_INITDATA = "user_initdata.action";//注册
         public static final String API_USER_CHECKVERIFYCODE = "user_checkverifycode.action?";//检验认证码
         public static final String API_USER_SIGNUP = "user_signup.action?";//注册

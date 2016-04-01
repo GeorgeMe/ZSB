@@ -1,1 +1,1 @@
-include ':app', ':tutor', ':dialog'
+include ':app', ':tutor', ':dialog', ':smssdk'

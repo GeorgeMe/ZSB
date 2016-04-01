@@ -13,6 +13,7 @@
         android:background="@color/colorPrimaryDark">
 
         <ImageView
+            android:id="@+id/img_header"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -40,18 +41,21 @@
                 android:layout_weight="1">
 
                 <TextView
+                    android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="龙邦"
                     android:textSize="@dimen/small_text" />
 
                 <TextView
+                    android:id="@+id/tv_type"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="(在校老师) "
                     android:textSize="@dimen/small_text" />
 
                 <TextView
+                    android:id="@+id/tv_sex"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" 女"
@@ -73,18 +77,21 @@
                 android:layout_weight="1">
 
                 <TextView
+                    android:id="@+id/tv_appointed_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="2016-04-06 14:20"
                     android:textSize="@dimen/small_text" />
 
                 <TextView
+                    android:id="@+id/tv_charging"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="90￥/小时"
                     android:textSize="@dimen/small_text" />
 
                 <TextView
+                    android:id="@+id/tv_curriculum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="初中数学"
@@ -94,6 +101,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_note"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxEms="12"
@@ -111,6 +119,7 @@
         android:gravity="center">
 
         <TextView
+            android:id="@+id/tv_comment_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="好评"
