@@ -18,9 +18,11 @@ import com.dmd.tutor.netstatus.NetUtils;
 import com.dmd.tutor.utils.XmlDB;
 import com.dmd.tutor.widgets.XSwipeRefreshLayout;
 import com.dmd.zsb.R;
+import com.dmd.zsb.api.ApiConstants;
 import com.dmd.zsb.common.Constants;
 import com.dmd.zsb.entity.EvaluationEntity;
 import com.dmd.zsb.entity.response.EvaluationResponse;
+import com.dmd.zsb.mvp.presenter.impl.DemandPresenterImpl;
 import com.dmd.zsb.mvp.presenter.impl.EvaluationPresenterImpl;
 import com.dmd.zsb.mvp.view.EvaluationView;
 import com.dmd.zsb.ui.activity.base.BaseActivity;
@@ -48,19 +50,12 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
     RadioButton evaluationGroupMenuIncomplete;
     @Bind(R.id.evaluation_group_menu_recent_completed)
     RadioButton evaluationGroupMenuRecentCompleted;
-    @Bind(R.id.evaluation_group_menu_my_evaluation)
-    RadioButton evaluationGroupMenuMyEvaluation;
 
     private EvaluationPresenterImpl evaluationPresenter;
     private ListViewDataAdapter<EvaluationEntity> mListViewAdapter;
-    private int page=0;
+    private int page=1;
     @Override
     protected void getBundleExtras(Bundle extras) {
-        evaluationPresenter = new EvaluationPresenterImpl(mContext, this);
-        JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
-        jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
-        evaluationPresenter.onEvaluation(Constants.EVENT_LOAD_MORE_DATA, jsonObject);
     }
 
     @Override
@@ -80,6 +75,49 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
 
     @Override
     protected void initViewsAndEvents() {
+        evaluationGroupMenuIncomplete.setChecked(true);
+        evaluationPresenter = new EvaluationPresenterImpl(mContext, this);
+        if (NetUtils.isNetworkConnected(mContext)) {
+            if (null != fragmentEvaluationListSwipeLayout) {
+                fragmentEvaluationListSwipeLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        JsonObject jsonObject = new JsonObject();
+                        jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
+                        jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
+                        jsonObject.addProperty("page", page);
+                        jsonObject.addProperty("rows", ApiConstants.Integers.PAGE_LIMIT);
+                        if (evaluationGroupMenuIncomplete.isChecked()) {
+                            jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
+                        } else if (evaluationGroupMenuRecentCompleted.isChecked()) {
+                            jsonObject.addProperty("group_menu", "evaluationGroupMenuRecentCompleted");
+                        }else {
+                            jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
+                        }
+                        evaluationPresenter.onEvaluation(Constants.EVENT_REFRESH_DATA, jsonObject);
+                    }
+                }, ApiConstants.Integers.PAGE_LAZY_LOAD_DELAY_TIME_MS);
+            }
+        } else {
+            toggleNetworkError(true, new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    JsonObject jsonObject = new JsonObject();
+                    jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
+                    jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
+                    jsonObject.addProperty("page", page);
+                    jsonObject.addProperty("rows", ApiConstants.Integers.PAGE_LIMIT);
+                    if (evaluationGroupMenuIncomplete.isChecked()) {
+                        jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
+                    } else if (evaluationGroupMenuRecentCompleted.isChecked()) {
+                        jsonObject.addProperty("group_menu", "evaluationGroupMenuRecentCompleted");
+                    }else {
+                        jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
+                    }
+                    evaluationPresenter.onEvaluation(Constants.EVENT_REFRESH_DATA, jsonObject);
+                }
+            });
+        }
         mListViewAdapter=new ListViewDataAdapter<EvaluationEntity>(new ViewHolderCreator<EvaluationEntity>(){
 
 
@@ -110,15 +148,22 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
                     @Override
                     public void showData(int position, EvaluationEntity itemData) {
                         //数据展示set
-                        Picasso.with(mContext).load(itemData.getImg_header()).into(img_header);
+                        if (evaluationGroupMenuIncomplete.isChecked()){
+                            tv_note.setVisibility(View.GONE);
+                            tv_comment_level.setText("评论");
+                        }else if (evaluationGroupMenuRecentCompleted.isChecked()){
+                            tv_note.setVisibility(View.VISIBLE);
+                            tv_note.setText(itemData.getNote());
+                            tv_comment_level.setText(itemData.getComment_level());
+                        }
+                        Picasso.with(mContext).load(ApiConstants.Urls.API_BASE_URLS+itemData.getImg_header()).into(img_header);
                         tv_name.setText(itemData.getName());
                         tv_type.setText(itemData.getType());
                         tv_sex.setText(itemData.getSex());
                         tv_appointed_time.setText(itemData.getAppointed_time());
                         tv_charging.setText(itemData.getCharging());
                         tv_curriculum.setText(itemData.getCurriculum());
-                        tv_note.setText(itemData.getNote());
-                        tv_comment_level.setText(itemData.getComment_level());
+
                     }
                 };
             }
@@ -134,8 +179,6 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
                 getResources().getColor(R.color.gplus_color_4));
         fragmentEvaluationListSwipeLayout.setOnRefreshListener(this);
 
-
-        evaluationGroupMenuIncomplete.setChecked(true);
     }
 
     @Override
@@ -180,6 +223,15 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
         jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
+        jsonObject.addProperty("page", page);
+        jsonObject.addProperty("rows", ApiConstants.Integers.PAGE_LIMIT);
+        if (evaluationGroupMenuIncomplete.isChecked()) {
+            jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
+        } else if (evaluationGroupMenuRecentCompleted.isChecked()) {
+            jsonObject.addProperty("group_menu", "evaluationGroupMenuRecentCompleted");
+        }else {
+            jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
+        }
         evaluationPresenter.onEvaluation(Constants.EVENT_LOAD_MORE_DATA, jsonObject);
     }
 
@@ -188,6 +240,15 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
         jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
+        jsonObject.addProperty("page", page);
+        jsonObject.addProperty("rows", ApiConstants.Integers.PAGE_LIMIT);
+        if (evaluationGroupMenuIncomplete.isChecked()) {
+            jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
+        } else if (evaluationGroupMenuRecentCompleted.isChecked()) {
+            jsonObject.addProperty("group_menu", "evaluationGroupMenuRecentCompleted");
+        }else {
+            jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
+        }
         evaluationPresenter.onEvaluation(Constants.EVENT_REFRESH_DATA, jsonObject);
     }
 
@@ -233,29 +294,29 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
     }
 
 
-    @OnClick({R.id.bar_evaluation_back, R.id.evaluation_group_menu_incomplete, R.id.evaluation_group_menu_recent_completed, R.id.evaluation_group_menu_my_evaluation})
+    @OnClick({R.id.bar_evaluation_back, R.id.evaluation_group_menu_incomplete, R.id.evaluation_group_menu_recent_completed})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bar_evaluation_back:
                 finish();
                 break;
             case R.id.evaluation_group_menu_incomplete:
-                JsonObject incomplete = new JsonObject();
-                incomplete.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
-                incomplete.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
-                evaluationPresenter.onEvaluation(Constants.EVENT_REFRESH_DATA, incomplete);
+                JsonObject evaluation_group_menu_incomplete = new JsonObject();
+                evaluation_group_menu_incomplete.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
+                evaluation_group_menu_incomplete.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
+                evaluation_group_menu_incomplete.addProperty("page", 1);
+                evaluation_group_menu_incomplete.addProperty("rows", ApiConstants.Integers.PAGE_LIMIT);
+                evaluation_group_menu_incomplete.addProperty("group_menu", "evaluationGroupMenuIncomplete");
+                evaluationPresenter.onEvaluation(Constants.EVENT_REFRESH_DATA, evaluation_group_menu_incomplete);
                 break;
             case R.id.evaluation_group_menu_recent_completed:
-                JsonObject completed = new JsonObject();
-                completed.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
-                completed.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
-                evaluationPresenter.onEvaluation(Constants.EVENT_REFRESH_DATA, completed);
-                break;
-            case R.id.evaluation_group_menu_my_evaluation:
-                JsonObject my_evaluation = new JsonObject();
-                my_evaluation.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
-                my_evaluation.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
-                evaluationPresenter.onEvaluation(Constants.EVENT_REFRESH_DATA, my_evaluation);
+                JsonObject evaluation_group_menu_recent_completed = new JsonObject();
+                evaluation_group_menu_recent_completed.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
+                evaluation_group_menu_recent_completed.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
+                evaluation_group_menu_recent_completed.addProperty("page", 1);
+                evaluation_group_menu_recent_completed.addProperty("rows", ApiConstants.Integers.PAGE_LIMIT);
+                evaluation_group_menu_recent_completed.addProperty("group_menu", "evaluationGroupMenuRecentCompleted");
+                evaluationPresenter.onEvaluation(Constants.EVENT_REFRESH_DATA, evaluation_group_menu_recent_completed);
                 break;
         }
     }

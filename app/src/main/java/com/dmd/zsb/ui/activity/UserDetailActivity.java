@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.dmd.tutor.eventbus.EventCenter;
 import com.dmd.tutor.netstatus.NetUtils;
 import com.dmd.zsb.R;
+import com.dmd.zsb.api.ApiConstants;
 import com.dmd.zsb.entity.response.UserDetailResponse;
 import com.dmd.zsb.mvp.presenter.impl.UserDetailPresenterImpl;
 import com.dmd.zsb.mvp.view.UserDetailView;
@@ -132,7 +133,7 @@ public class UserDetailActivity extends BaseActivity implements UserDetailView,V
     @Override
     public void setUserInfo(UserDetailResponse userInfo) {
         userDetailResponse=userInfo;
-        Picasso.with(mContext).load(userInfo.getUserImgHeader()).into(userImgHeader);
+        Picasso.with(mContext).load(ApiConstants.Urls.API_BASE_URLS+userInfo.getUserImgHeader()).into(userImgHeader);
         userName.setText(userInfo.getUserName());
         userGender.setText(userInfo.getUserGender());
         userPraise.setText(userInfo.getUserPraise());

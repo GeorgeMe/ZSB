@@ -115,7 +115,6 @@
         android:layout_height="75dp"
         android:layout_alignParentRight="true"
         android:layout_toRightOf="@+id/lko"
-        android:background="@color/colorPrimaryDark"
         android:gravity="center">
 
         <TextView

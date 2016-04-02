@@ -6,6 +6,7 @@ package com.dmd.zsb.entity;
  */
 public class DemandEntity {
 
+    private String img_header;//头像
     private String name;//姓名
     private String type;//职业类型
     private String sex;//性别
@@ -15,6 +16,16 @@ public class DemandEntity {
     private String address;//地址
     private String place;//地点
     private String mode;//授课方式
+    private String state;//状态
+    private String praise;//好评
+
+    public String getImg_header() {
+        return img_header;
+    }
+
+    public void setImg_header(String img_header) {
+        this.img_header = img_header;
+    }
 
     public String getName() {
         return name;
@@ -86,5 +97,21 @@ public class DemandEntity {
 
     public void setMode(String mode) {
         this.mode = mode;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getPraise() {
+        return praise;
+    }
+
+    public void setPraise(String praise) {
+        this.praise = praise;
     }
 }

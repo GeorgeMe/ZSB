@@ -27,11 +27,11 @@
             android:drawableBottom="@drawable/radio_button_drawable_bottom"
             android:drawableTop="@drawable/radio_button_drawable_top"
             android:gravity="center"
-            android:text="未完成评价（21）"
-            android:textSize="12sp" />
+            android:text="未完成评价"
+            android:textSize="@dimen/medium_text" />
 
         <TextView
-            android:layout_width="2dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="#aea6a6" />
 
@@ -45,26 +45,13 @@
             android:drawableBottom="@drawable/radio_button_drawable_bottom"
             android:drawableTop="@drawable/radio_button_drawable_top"
             android:gravity="center"
-            android:text="已完成评价（22）"
-            android:textSize="12sp" />
+            android:text="已完成评价"
+            android:textSize="@dimen/medium_text" />
 
         <TextView
-            android:layout_width="2dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="#aea6a6" />
-
-        <RadioButton
-            android:id="@+id/evaluation_group_menu_my_evaluation"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:button="@null"
-            android:drawableBottom="@drawable/radio_button_drawable_bottom"
-            android:drawableTop="@drawable/radio_button_drawable_top"
-            android:gravity="center"
-            android:text="对我的评价（144）"
-            android:textSize="12sp" />
     </RadioGroup>
 
     <View
@@ -80,11 +67,12 @@
 
         <com.dmd.zsb.widgets.LoadMoreListView
             android:id="@+id/fragment_evaluation_list_list_view"
+            android:background="@color/setting_grey_bg_nor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:cacheColorHint="@android:color/transparent"
             android:divider="@null"
-            android:dividerHeight="0dp"
+            android:dividerHeight="5dp"
             android:fadingEdge="none"
             android:fadingEdgeLength="0dp"
             android:listSelector="@android:color/transparent"

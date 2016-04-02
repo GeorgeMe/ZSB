@@ -180,68 +180,17 @@ public class HomeFragment extends BaseFragment implements HomeView, LoadMoreList
 
                     @Override
                     public void showData(int position, UserEntity itemData) {
-                        if (itemData != null) {
 
-                            if (!CommonUtils.isEmpty(itemData.getAvatar())) {
-                                Picasso.with(mContext).load(itemData.getAvatar()).into(tutor_list_teacher_header_img);
-                            } else {
-                                tutor_list_teacher_header_img.setImageResource(R.drawable.img_head_for_empty);
-                            }
-
-                            if (!CommonUtils.isEmpty(itemData.getUsername())) {
+                                Picasso.with(mContext).load(ApiConstants.Urls.API_BASE_URLS+itemData.getAvatar()).into(tutor_list_teacher_header_img);
                                 tutor_list_teacher_name.setText(itemData.getUsername());
-                            } else {
-                                tutor_list_teacher_name.setText("");
-                            }
-
-                            if (!CommonUtils.isEmpty(itemData.getRole())) {
                                 tutor_list_teacher_type.setText("("+itemData.getRole()+")");
-                            } else {
-                                tutor_list_teacher_type.setText("");
-                            }
-
-                            if (!CommonUtils.isEmpty(itemData.getGender())) {
                                 tutor_list_teacher_sex.setText(itemData.getGender());
-                            } else {
-                                tutor_list_teacher_sex.setText("");
-                            }
-
-                            if (!CommonUtils.isEmpty(itemData.getTotal_hours()+"")) {
                                 tutor_list_teacher_time.setText(itemData.getTotal_hours()+"");
-                            } else {
-                                tutor_list_teacher_time.setText("");
-                            }
-
-                            if (!CommonUtils.isEmpty("")) {
-                                tutor_list_teacher_Level.setText("");
-                            } else {
                                 tutor_list_teacher_Level.setText("未认证");
-                            }
-
-                            if (!CommonUtils.isEmpty(itemData.getSignature())) {
                                 tutor_list_teacher_content.setText(itemData.getSignature());
-                            } else {
-                                tutor_list_teacher_content.setText("");
-                            }
-
-                            if (!CommonUtils.isEmpty("")) {
                                 tutor_list_teacher_one2one.setText("");
-                            } else {
-                                tutor_list_teacher_one2one.setText("");
-                            }
-
-                            if (!CommonUtils.isEmpty("")) {
                                 tutor_list_teacher_one2more.setText("");
-                            } else {
-                                tutor_list_teacher_one2more.setText("");
-                            }
-
-                            if (!CommonUtils.isEmpty(itemData.getLat())&&!CommonUtils.isEmpty(itemData.getLon())) {
                                 tutor_list_teacher_distance.setText(LocationManager.getLocation(Double.parseDouble(itemData.getLat()),Double.parseDouble(itemData.getLon())));
-                            } else {
-                                tutor_list_teacher_distance.setText("");
-                            }
-                        }
                     }
                 };
             }
