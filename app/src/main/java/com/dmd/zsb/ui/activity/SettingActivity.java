@@ -144,7 +144,7 @@ public class SettingActivity extends BaseActivity implements SettingView,OnUploa
 
                 jsonObject.add("json",json);
                 jsonObject.add("formFile",formFile);
-                settingPresenter.uploadAvatar(jsonObject);
+                settingPresenter.uploadAvatar(1,jsonObject);
             } else {
                 Message msg = Message.obtain();
                 msg.what = 3;
@@ -187,7 +187,7 @@ public class SettingActivity extends BaseActivity implements SettingView,OnUploa
                 JsonObject json=new JsonObject();
                 json.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid","sid"));
                 json.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid","uid"));
-                settingPresenter.onSignOut(json);
+                settingPresenter.onSignOut(1,json);
                 break;
         }
     }

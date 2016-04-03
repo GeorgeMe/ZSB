@@ -46,6 +46,6 @@ public class SignInPresenterImpl implements SignInPresenter,BaseSingleLoadedList
 
     @Override
     public void signIn(JsonObject jsonObject) {
-        signInInteractor.signIn(jsonObject);
+        signInInteractor.getCommonSingleData(jsonObject);
     }
 }

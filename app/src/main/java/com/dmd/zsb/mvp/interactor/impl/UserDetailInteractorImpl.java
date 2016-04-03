@@ -4,7 +4,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.GsonRequest;
 import com.dmd.zsb.entity.response.UserDetailResponse;
-import com.dmd.zsb.mvp.interactor.UserDetailInteractor;
+import com.dmd.zsb.mvp.listeners.CommonSingleInteractor;
 import com.dmd.zsb.mvp.listeners.BaseSingleLoadedListener;
 import com.dmd.zsb.utils.UriHelper;
 import com.dmd.zsb.utils.VolleyHelper;
@@ -14,7 +14,7 @@ import com.google.gson.reflect.TypeToken;
 /**
  * Created by Administrator on 2016/3/18.
  */
-public class UserDetailInteractorImpl implements UserDetailInteractor {
+public class UserDetailInteractorImpl implements CommonSingleInteractor {
 
     private BaseSingleLoadedListener<UserDetailResponse> loadedListener;
 
@@ -23,8 +23,8 @@ public class UserDetailInteractorImpl implements UserDetailInteractor {
     }
 
     @Override
-    public void getUserDetail(JsonObject jsonObject) {
-        GsonRequest<UserDetailResponse> gsonRequest=new GsonRequest<UserDetailResponse>(UriHelper.getInstance().userDetail(jsonObject),null,new TypeToken<UserDetailResponse>(){}.getType(), new Response.Listener<UserDetailResponse>(){
+    public void getCommonSingleData(JsonObject gson) {
+        GsonRequest<UserDetailResponse> gsonRequest=new GsonRequest<UserDetailResponse>(UriHelper.getInstance().userDetail(gson),null,new TypeToken<UserDetailResponse>(){}.getType(), new Response.Listener<UserDetailResponse>(){
             @Override
             public void onResponse(UserDetailResponse response) {
                 loadedListener.onSuccess(response);
@@ -39,4 +39,5 @@ public class UserDetailInteractorImpl implements UserDetailInteractor {
         gsonRequest.setTag("userDetail");
         VolleyHelper.getInstance().getRequestQueue().add(gsonRequest);
     }
+
 }

@@ -24,7 +24,7 @@ public class SignUpPresenterImpl implements SignUpPresenter,BaseSingleLoadedList
 
     @Override
     public void signUp(JsonObject data) {
-        signUpInteractor.signUp(data);
+        signUpInteractor.getCommonSingleData(data);
     }
 
     @Override

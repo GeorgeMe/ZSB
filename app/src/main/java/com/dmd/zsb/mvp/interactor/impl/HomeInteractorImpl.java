@@ -5,7 +5,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.GsonRequest;
 
 import com.dmd.zsb.entity.response.HomeResponse;
-import com.dmd.zsb.mvp.interactor.CommonListInteractor;
+import com.dmd.zsb.mvp.listeners.CommonListInteractor;
 import com.dmd.zsb.mvp.listeners.BaseMultiLoadedListener;
 import com.dmd.zsb.utils.UriHelper;
 import com.dmd.zsb.utils.VolleyHelper;

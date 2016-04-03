@@ -24,7 +24,7 @@ public class ChangePasswordPresenterImpl implements ChangePasswordPresenter,Base
 
     @Override
     public void onChangePassword(JsonObject jsonObject) {
-        changePasswordInteractor.onChangePassword(jsonObject);
+        changePasswordInteractor.getCommonSingleData(jsonObject);
     }
 
     @Override

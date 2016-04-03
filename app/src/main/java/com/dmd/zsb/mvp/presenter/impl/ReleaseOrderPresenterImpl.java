@@ -25,7 +25,7 @@ public class ReleaseOrderPresenterImpl implements ReleaseOrderPresenter ,BaseSin
 
     @Override
     public void onReleaseOrder(JsonObject jsonObject) {
-        releaseOrderInteractor.onReleaseOrder(jsonObject);
+        releaseOrderInteractor.getCommonSingleData(jsonObject);
     }
 
     @Override

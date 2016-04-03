@@ -13,6 +13,7 @@ public class ApiConstants {
         public static final String API_USER_BALANCE = "user_balance.action?";//余额
         public static final String API_USER_PROFILE = "user_profile.action?";//信息简介
         public static final String API_USER_LIST = "user_list.action?";//用户列表
+        public static final String API_USER_MINE = "user_mine.action?";//用户列表
         public static final String API_USER_DETAIL = "user_detail.action?";//用户列表
         public static final String API_USER_CHANGEAVATAR = "user_changeavatar.action?";//修改头像
         public static final String API_USER_LOGFILE = "user_logFile.action?";//上传日志

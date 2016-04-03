@@ -31,7 +31,7 @@ public class UserDetailPresenterImpl implements UserDetailPresenter,BaseSingleLo
         jsonObject.addProperty("uid",uid);
         jsonObject.addProperty("sid",sid);
 
-        userDetailInteractor.getUserDetail(jsonObject);
+        userDetailInteractor.getCommonSingleData(jsonObject);
     }
 
     @Override

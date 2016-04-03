@@ -7,7 +7,7 @@
     android:orientation="vertical"
     tools:context="com.dmd.zsb.ui.activity.UserDetailActivity">
 
-    <include layout="@layout/bar_for_user_detail" />
+    <include layout="@layout/top_view" />
 
     <FrameLayout
         android:id="@+id/user_loading_view"

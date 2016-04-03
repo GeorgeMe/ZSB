@@ -68,8 +68,12 @@
         <activity android:name=".ui.activity.BriefActivity" />
         <activity android:name=".ui.activity.DemandDetailActivity" />
         <activity android:name=".ui.activity.EvaluationDetailActivity" />
-        <activity android:name=".ui.activity.OrderDetailActivity"></activity>
-        <activity android:name="com.mob.tools.MobUIShell"/>
+        <activity android:name=".ui.activity.OrderDetailActivity" />
+        <activity android:name="com.mob.tools.MobUIShell" />
+        <activity android:name=".ui.activity.BankCardActivity" />
+        <activity android:name=".ui.activity.WithDrawalsActivity" />
+        <activity android:name=".ui.activity.RechargeActivity" />
+        <activity android:name=".ui.activity.TransactionDetailActivity"></activity>
     </application>
 
 </manifest>

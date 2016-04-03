@@ -6,7 +6,7 @@
     tools:context="com.dmd.zsb.ui.fragment.MessageFragment">
 
     <include
-        layout="@layout/bar_for_message"
+        layout="@layout/top_view"
         android:layout_width="match_parent"
         android:layout_height="48dp" />
 

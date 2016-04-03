@@ -296,6 +296,7 @@ public class SeekFragment extends BaseFragment implements SeekView, LoadMoreList
                     mListViewAdapter.notifyDataSetChanged();
                 }
             }
+
             if (data.getTotal_page() > page)
                 fragmentSeekListListView.setCanLoadMore(true);
             else

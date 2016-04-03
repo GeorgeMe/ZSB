@@ -12,7 +12,6 @@ import com.dmd.zsb.R;
 import com.dmd.zsb.ui.activity.base.BaseActivity;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ChangePasswordActivity extends BaseActivity {

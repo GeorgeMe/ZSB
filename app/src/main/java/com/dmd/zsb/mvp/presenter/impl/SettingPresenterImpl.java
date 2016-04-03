@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.dmd.tutor.utils.OnUploadProcessListener;
 import com.dmd.zsb.mvp.interactor.impl.SettingInteracterImpl;
+import com.dmd.zsb.mvp.listeners.BaseMultiLoadedListener;
 import com.dmd.zsb.mvp.listeners.BaseSingleLoadedListener;
 import com.dmd.zsb.mvp.presenter.SettingPresenter;
 import com.dmd.zsb.mvp.view.SettingView;
@@ -12,7 +13,7 @@ import com.google.gson.JsonObject;
 /**
  * Created by Administrator on 2016/3/25.
  */
-public class SettingPresenterImpl implements SettingPresenter,BaseSingleLoadedListener<JsonObject>{
+public class SettingPresenterImpl implements SettingPresenter,BaseMultiLoadedListener<JsonObject> {
     private Context mContext=null;
     private SettingInteracterImpl settingInteracter;
     private SettingView settingView;
@@ -25,12 +26,12 @@ public class SettingPresenterImpl implements SettingPresenter,BaseSingleLoadedLi
     }
 
     @Override
-    public void uploadAvatar(JsonObject jsonObject) {
-        settingInteracter.uploadAvatar(jsonObject);
+    public void uploadAvatar(int event,JsonObject jsonObject) {
+        settingInteracter.getCommonListData(event,jsonObject);
     }
 
     @Override
-    public void onSuccess(JsonObject data) {
+    public void onSuccess(int event,JsonObject data) {
         settingView.showTip(data.get("msg").getAsString());
     }
 
@@ -45,7 +46,7 @@ public class SettingPresenterImpl implements SettingPresenter,BaseSingleLoadedLi
     }
 
     @Override
-    public void onSignOut(JsonObject jsonObject) {
-        settingInteracter.onSignOut(jsonObject);
+    public void onSignOut(int event,JsonObject jsonObject) {
+        settingInteracter.onSignOut(event,jsonObject);
     }
 }

@@ -24,7 +24,7 @@ public class FeedbackPresenterImpl implements FeedbackPresenter,BaseSingleLoaded
 
     @Override
     public void seedFeedback(JsonObject jsonObject) {
-        feedbackInteractor.seedFeedback(jsonObject);
+        feedbackInteractor.getCommonSingleData(jsonObject);
     }
 
     @Override

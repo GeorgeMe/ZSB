@@ -6,7 +6,7 @@
     android:orientation="vertical"
     tools:context="com.dmd.zsb.ui.activity.VouchersActivity">
 
-    <include layout="@layout/bar_for_vouchers" />
+    <include layout="@layout/top_view" />
 
     <com.dmd.tutor.widgets.XSwipeRefreshLayout
         android:id="@+id/vouchers_list_swipe_layout"

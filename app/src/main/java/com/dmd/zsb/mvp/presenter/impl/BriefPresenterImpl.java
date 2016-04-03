@@ -24,7 +24,7 @@ public class BriefPresenterImpl implements BriefPresenter,BaseSingleLoadedListen
 
     @Override
     public void onChangeProfile(JsonObject jsonObject) {
-        briefInteractor.onChangeProfile(jsonObject);
+        briefInteractor.getCommonSingleData(jsonObject);
     }
 
     @Override

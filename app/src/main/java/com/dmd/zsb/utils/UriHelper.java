@@ -87,6 +87,10 @@ public class UriHelper {
     public String userList(JsonObject json){
         return urlToString(true,ApiConstants.Urls.API_USER_LIST,json);
     }
+    //用户列表
+    public String mine(JsonObject json){
+        return urlToString(true,ApiConstants.Urls.API_USER_MINE,json);
+    }
     //用户详情
     public String userDetail(JsonObject json){
         return urlToString(true,ApiConstants.Urls.API_USER_DETAIL,json);
@@ -191,4 +195,5 @@ public class UriHelper {
     public String updateOrderStatus(JsonObject json){
         return urlToString(true,ApiConstants.Urls.API_ORDER_UPDATEORDERSTATUS,json);
     }
+
 }

@@ -1,62 +1,67 @@
 package com.dmd.zsb.ui.fragment;
 
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.dmd.dialog.MaterialDialog;
 import com.dmd.tutor.eventbus.EventCenter;
+import com.dmd.tutor.utils.XmlDB;
 import com.dmd.zsb.R;
+import com.dmd.zsb.api.ApiConstants;
+import com.dmd.zsb.mvp.presenter.impl.MinePresenterImpl;
+import com.dmd.zsb.mvp.view.MineView;
 import com.dmd.zsb.ui.activity.AboutUsActivity;
 import com.dmd.zsb.ui.activity.DemandActivity;
 import com.dmd.zsb.ui.activity.EvaluationActivity;
 import com.dmd.zsb.ui.activity.OrderActivity;
+import com.dmd.zsb.ui.activity.SettingActivity;
+import com.dmd.zsb.ui.activity.SignInActivity;
 import com.dmd.zsb.ui.activity.VouchersActivity;
 import com.dmd.zsb.ui.activity.WalletActivity;
 import com.dmd.zsb.ui.activity.base.BaseFragment;
+import com.google.gson.JsonObject;
 import com.squareup.otto.Subscribe;
+import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class MineFragment extends BaseFragment implements View.OnClickListener {
 
-    @Bind(R.id.bar_home_title)
-    TextView barHomeTitle;
-    @Bind(R.id.mine_sign_out_header_img)
-    ImageView mineSignOutHeaderImg;
+public class MineFragment extends BaseFragment implements MineView {
+
+    @Bind(R.id.top_bar_back)
+    TextView topBarBack;
+    @Bind(R.id.top_bar_title)
+    TextView topBarTitle;
+    @Bind(R.id.mine_sign_in)
+    TextView mineSignIn;
     @Bind(R.id.mine_sign_out_header)
     LinearLayout mineSignOutHeader;
-    @Bind(R.id.mine_logout_header_img)
-    ImageView mineLogoutHeaderImg;
+    @Bind(R.id.mine_header_img)
+    ImageView mineHeaderImg;
     @Bind(R.id.mine_name)
     TextView mineName;
-    @Bind(R.id.mine_job_type)
-    TextView mineJobType;
-    @Bind(R.id.mine_gender)
-    TextView mineGender;
     @Bind(R.id.mine_address)
     TextView mineAddress;
-    @Bind(R.id.mine_one_to_one)
-    TextView mineOneToOne;
-    @Bind(R.id.mine_one_to_many)
-    TextView mineOneToMany;
-    @Bind(R.id.mine_good_at_subjects)
-    TextView mineGoodAtSubjects;
+    @Bind(R.id.mine_grade)
+    TextView mineGrade;
+    @Bind(R.id.mine_subjects)
+    TextView mineSubjects;
     @Bind(R.id.mine_modify_data)
     TextView mineModifyData;
     @Bind(R.id.mine_logout_header)
     LinearLayout mineLogoutHeader;
     @Bind(R.id.mine_wallet)
-    TextView mineWallet;
+    LinearLayout mineWallet;
     @Bind(R.id.mine_order)
-    TextView mineOrder;
+    LinearLayout mineOrder;
     @Bind(R.id.mine_evaluation)
     TextView mineEvaluation;
+    @Bind(R.id.mine_demand)
+    TextView mineDemand;
     @Bind(R.id.mine_vouchers)
     TextView mineVouchers;
     @Bind(R.id.mine_about_us)
@@ -65,9 +70,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     TextView mineSwitchAccount;
     @Bind(R.id.mine_sign_out)
     TextView mineSignOut;
-    @Bind(R.id.mine_demand)
-    TextView mineDemand;
 
+    private MinePresenterImpl minePresenter;
     @Override
     protected int getContentViewLayoutID() {
         return R.layout.fragment_mine;
@@ -95,14 +99,39 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initViewsAndEvents() {
-        mineWallet.setOnClickListener(this);
-        mineOrder.setOnClickListener(this);
-        mineDemand.setOnClickListener(this);
-        mineEvaluation.setOnClickListener(this);
-        mineVouchers.setOnClickListener(this);
-        mineAboutUs.setOnClickListener(this);
-        mineSwitchAccount.setOnClickListener(this);
-        mineSignOut.setOnClickListener(this);
+        topBarBack.setVisibility(View.GONE);
+        topBarTitle.setText("我的");
+        if (XmlDB.getInstance(mContext).getKeyBooleanValue("isLogin", false)){
+            mineSignOutHeader.setVisibility(View.GONE);
+            mineLogoutHeader.setVisibility(View.VISIBLE);
+            minePresenter=new MinePresenterImpl(mContext,this);
+            JsonObject jsonObject=new JsonObject();
+            jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid","sid"));
+            jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid","uid"));
+            minePresenter.onMineInfo(1,jsonObject);
+        }else {
+            mineSignOutHeader.setVisibility(View.VISIBLE);
+            mineLogoutHeader.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setView(JsonObject data) {
+
+        Log.e(TAG_LOG,data.toString());
+//        Log.e(TAG_LOG,ApiConstants.Urls.API_BASE_URLS+data.get("").getAsString());
+
+        Picasso.with(mContext).load(ApiConstants.Urls.API_BASE_URLS+data.get("mineHeaderImg").getAsString()).into(mineHeaderImg);
+        mineName.setText(data.get("mineName").getAsString());
+        mineAddress.setText(data.get("mineAddress").getAsString());
+        mineGrade.setText(data.get("mineGrade").getAsString());
+        mineSubjects.setText(data.get("mineSubjects").getAsString());
+
+    }
+
+    @Override
+    public void showTip(String msg) {
+        showToast(msg);
     }
 
     @Override
@@ -116,34 +145,49 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     }
 
-    @Override
-    public void onClick(View v) {
-        if (mineWallet == v) {
-            readyGo(WalletActivity.class);
-        } else if (mineOrder == v) {
-            readyGo(OrderActivity.class);
-        } else if (mineDemand == v) {
-            readyGo(DemandActivity.class);
-        } else if (mineEvaluation == v) {
-            readyGo(EvaluationActivity.class);
-        } else if (mineVouchers == v) {
-            readyGo(VouchersActivity.class);
-        } else if (mineAboutUs == v) {
-            readyGo(AboutUsActivity.class);
-        } else if (mineSwitchAccount == v) {
-            new MaterialDialog.Builder(getActivity())
-                    .title(R.string.title)
-                    .content("切换账户")
-                    .positiveText(R.string.agree)
-                    .negativeText(R.string.disagree)
-                    .show();
-        } else if (mineSignOut == v) {
-            new MaterialDialog.Builder(getActivity())
-                    .title(R.string.title)
-                    .content("退出登录")
-                    .positiveText(R.string.agree)
-                    .negativeText(R.string.disagree)
-                    .show();
+    @OnClick({R.id.mine_sign_in, R.id.mine_modify_data, R.id.mine_wallet, R.id.mine_order, R.id.mine_evaluation, R.id.mine_demand, R.id.mine_vouchers, R.id.mine_about_us, R.id.mine_switch_account, R.id.mine_sign_out})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.mine_sign_in:
+                readyGo(SignInActivity.class);
+                break;
+            case R.id.mine_modify_data:
+                readyGo(SettingActivity.class);
+                break;
+            case R.id.mine_wallet:
+                readyGo(WalletActivity.class);
+                break;
+            case R.id.mine_order:
+                readyGo(OrderActivity.class);
+                break;
+            case R.id.mine_evaluation:
+                readyGo(EvaluationActivity.class);
+                break;
+            case R.id.mine_demand:
+                readyGo(DemandActivity.class);
+                break;
+            case R.id.mine_vouchers:
+                readyGo(VouchersActivity.class);
+                break;
+            case R.id.mine_about_us:
+                readyGo(AboutUsActivity.class);
+                break;
+            case R.id.mine_switch_account:
+                new MaterialDialog.Builder(getActivity())
+                        .title(R.string.title)
+                        .content("切换账户")
+                        .positiveText(R.string.agree)
+                        .negativeText(R.string.disagree)
+                        .show();
+                break;
+            case R.id.mine_sign_out:
+                new MaterialDialog.Builder(getActivity())
+                        .title(R.string.title)
+                        .content("退出登录")
+                        .positiveText(R.string.agree)
+                        .negativeText(R.string.disagree)
+                        .show();
+                break;
         }
     }
 }

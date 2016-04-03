@@ -45,14 +45,16 @@ public class DemandActivity extends BaseActivity implements DemandView, LoadMore
     LoadMoreListView fragmentDemandListView;
     @Bind(R.id.fragment_demand_list_swipe_layout)
     XSwipeRefreshLayout fragmentDemandListSwipeLayout;
-    @Bind(R.id.bar_demand_back)
-    TextView barDemandBack;
     @Bind(R.id.demand_levy_concentration)
     RadioButton demandLevyConcentration;
     @Bind(R.id.demand_to_be_completed)
     RadioButton demandToBeCompleted;
     @Bind(R.id.demand_has_been_completed)
     RadioButton demandHasBeenCompleted;
+    @Bind(R.id.top_bar_title)
+    TextView topBarTitle;
+    @Bind(R.id.top_bar_back)
+    TextView topBarBack;
 
     private DemandPresenterImpl demandPresenter;
     private ListViewDataAdapter<DemandEntity> mListViewAdapter;
@@ -81,8 +83,10 @@ public class DemandActivity extends BaseActivity implements DemandView, LoadMore
 
     @Override
     protected void initViewsAndEvents() {
+        topBarTitle.setText("我的需求");
         demandLevyConcentration.setChecked(true);
         demandPresenter = new DemandPresenterImpl(mContext, this);
+
         if (NetUtils.isNetworkConnected(mContext)) {
             if (null != fragmentDemandListSwipeLayout) {
                 fragmentDemandListSwipeLayout.postDelayed(new Runnable() {
@@ -133,8 +137,9 @@ public class DemandActivity extends BaseActivity implements DemandView, LoadMore
                 return new ViewHolderBase<DemandEntity>() {
 
                     ImageView img_header;
-                    TextView tv_zjz,tv_name, tv_type, tv_sex,tv_sex2, tv_type2,tv_appointed_time, tv_charging, tv_curriculum, tv_address, tv_place, tv_state, tv_mode, tv_praise;
-                    LinearLayout l_zjz,l_zjh,l_zjz_p,l_zjh_m,l_zjh_s;
+                    TextView tv_zjz, tv_name, tv_type, tv_sex, tv_sex2, tv_type2, tv_appointed_time, tv_charging, tv_curriculum, tv_address, tv_place, tv_state, tv_mode, tv_praise;
+                    LinearLayout l_zjz, l_zjh, l_zjz_p, l_zjh_m, l_zjh_s;
+
                     @Override
                     public View createView(LayoutInflater layoutInflater) {
                         View view = layoutInflater.inflate(R.layout.demand_list_item, null);
@@ -185,7 +190,7 @@ public class DemandActivity extends BaseActivity implements DemandView, LoadMore
                             l_zjh_m.setVisibility(View.VISIBLE);
                             l_zjh_s.setVisibility(View.GONE);
 
-                            Picasso.with(mContext).load(ApiConstants.Urls.API_BASE_URLS+itemData.getImg_header()).into(img_header);
+                            Picasso.with(mContext).load(ApiConstants.Urls.API_BASE_URLS + itemData.getImg_header()).into(img_header);
                             tv_type2.setText(itemData.getType());
                             tv_sex2.setText(itemData.getSex());
                             tv_name.setText(itemData.getName());
@@ -204,7 +209,7 @@ public class DemandActivity extends BaseActivity implements DemandView, LoadMore
                             l_zjh_m.setVisibility(View.GONE);
                             l_zjh_s.setVisibility(View.VISIBLE);
 
-                            Picasso.with(mContext).load(ApiConstants.Urls.API_BASE_URLS+itemData.getImg_header()).into(img_header);
+                            Picasso.with(mContext).load(ApiConstants.Urls.API_BASE_URLS + itemData.getImg_header()).into(img_header);
                             tv_type2.setText(itemData.getType());
                             tv_sex2.setText(itemData.getSex());
                             tv_name.setText(itemData.getName());
@@ -350,10 +355,10 @@ public class DemandActivity extends BaseActivity implements DemandView, LoadMore
         return null;
     }
 
-    @OnClick({R.id.bar_demand_back, R.id.demand_levy_concentration, R.id.demand_to_be_completed, R.id.demand_has_been_completed})
+    @OnClick({R.id.top_bar_back ,R.id.demand_levy_concentration, R.id.demand_to_be_completed, R.id.demand_has_been_completed})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.bar_demand_back:
+            case R.id.top_bar_back:
                 finish();
                 break;
             case R.id.demand_levy_concentration:
@@ -385,4 +390,5 @@ public class DemandActivity extends BaseActivity implements DemandView, LoadMore
                 break;
         }
     }
+
 }

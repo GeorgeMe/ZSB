@@ -5,8 +5,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.GsonRequest;
 
 import com.dmd.zsb.entity.response.SeekResponse;
-import com.dmd.zsb.mvp.interactor.CommonListInteractor;
-import com.dmd.zsb.mvp.interactor.SeekInteractor;
+import com.dmd.zsb.mvp.listeners.CommonListInteractor;
 import com.dmd.zsb.mvp.listeners.BaseMultiLoadedListener;
 import com.dmd.zsb.utils.UriHelper;
 import com.dmd.zsb.utils.VolleyHelper;
@@ -16,7 +15,7 @@ import com.google.gson.reflect.TypeToken;
 /**
  * Created by Administrator on 2016/1/7.
  */
-public class SeekInteractorImpl implements CommonListInteractor,SeekInteractor {
+public class SeekInteractorImpl implements CommonListInteractor{
 
     private BaseMultiLoadedListener<SeekResponse> loadedListener = null;
 
@@ -26,7 +25,6 @@ public class SeekInteractorImpl implements CommonListInteractor,SeekInteractor {
 
     @Override
     public void getCommonListData(final int event,JsonObject data) {
- //String requestTag,final int event_tag, String keywords, int page
         GsonRequest<SeekResponse> gsonRequest = new GsonRequest<SeekResponse>(
                 UriHelper.getInstance().userList(data),
                 null,
@@ -49,34 +47,6 @@ public class SeekInteractorImpl implements CommonListInteractor,SeekInteractor {
 
         gsonRequest.setShouldCache(true);
         gsonRequest.setTag("userList");
-
-        VolleyHelper.getInstance().getRequestQueue().add(gsonRequest);
-    }
-
-    @Override
-    public void onAudition(final int event,JsonObject data) {
-        GsonRequest<SeekResponse> gsonRequest = new GsonRequest<SeekResponse>(
-                UriHelper.getInstance().onAudition(data),
-                null,
-                new TypeToken<SeekResponse>() {
-                }.getType(),
-                new Response.Listener<SeekResponse>() {
-                    @Override
-                    public void onResponse(SeekResponse response) {
-                        loadedListener.onSuccess(event, response);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-
-                        loadedListener.onException(error.getMessage());
-                    }
-                }
-        );
-
-        gsonRequest.setShouldCache(true);
-        gsonRequest.setTag("onAudition");
 
         VolleyHelper.getInstance().getRequestQueue().add(gsonRequest);
     }

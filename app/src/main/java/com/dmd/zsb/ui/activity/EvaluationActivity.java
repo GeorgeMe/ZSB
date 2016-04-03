@@ -22,7 +22,6 @@ import com.dmd.zsb.api.ApiConstants;
 import com.dmd.zsb.common.Constants;
 import com.dmd.zsb.entity.EvaluationEntity;
 import com.dmd.zsb.entity.response.EvaluationResponse;
-import com.dmd.zsb.mvp.presenter.impl.DemandPresenterImpl;
 import com.dmd.zsb.mvp.presenter.impl.EvaluationPresenterImpl;
 import com.dmd.zsb.mvp.view.EvaluationView;
 import com.dmd.zsb.ui.activity.base.BaseActivity;
@@ -34,7 +33,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class EvaluationActivity extends BaseActivity implements EvaluationView ,LoadMoreListView.OnLoadMoreListener,SwipeRefreshLayout.OnRefreshListener,AdapterView.OnItemClickListener{
+public class EvaluationActivity extends BaseActivity implements EvaluationView, LoadMoreListView.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
 
     @Bind(R.id.evaluation_menu_group)
     RadioGroup evaluationMenuGroup;
@@ -42,18 +41,19 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
     LoadMoreListView fragmentEvaluationListListView;
     @Bind(R.id.fragment_evaluation_list_swipe_layout)
     XSwipeRefreshLayout fragmentEvaluationListSwipeLayout;
-    @Bind(R.id.bar_evaluation_back)
-    TextView barEvaluationBack;
-    @Bind(R.id.bar_evaluation_title)
-    TextView barEvaluationTitle;
     @Bind(R.id.evaluation_group_menu_incomplete)
     RadioButton evaluationGroupMenuIncomplete;
     @Bind(R.id.evaluation_group_menu_recent_completed)
     RadioButton evaluationGroupMenuRecentCompleted;
+    @Bind(R.id.top_bar_back)
+    TextView topBarBack;
+    @Bind(R.id.top_bar_title)
+    TextView topBarTitle;
 
     private EvaluationPresenterImpl evaluationPresenter;
     private ListViewDataAdapter<EvaluationEntity> mListViewAdapter;
-    private int page=1;
+    private int page = 1;
+
     @Override
     protected void getBundleExtras(Bundle extras) {
     }
@@ -75,6 +75,7 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
 
     @Override
     protected void initViewsAndEvents() {
+        topBarTitle.setText("评价");
         evaluationGroupMenuIncomplete.setChecked(true);
         evaluationPresenter = new EvaluationPresenterImpl(mContext, this);
         if (NetUtils.isNetworkConnected(mContext)) {
@@ -91,7 +92,7 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
                             jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
                         } else if (evaluationGroupMenuRecentCompleted.isChecked()) {
                             jsonObject.addProperty("group_menu", "evaluationGroupMenuRecentCompleted");
-                        }else {
+                        } else {
                             jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
                         }
                         evaluationPresenter.onEvaluation(Constants.EVENT_REFRESH_DATA, jsonObject);
@@ -111,27 +112,28 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
                         jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
                     } else if (evaluationGroupMenuRecentCompleted.isChecked()) {
                         jsonObject.addProperty("group_menu", "evaluationGroupMenuRecentCompleted");
-                    }else {
+                    } else {
                         jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
                     }
                     evaluationPresenter.onEvaluation(Constants.EVENT_REFRESH_DATA, jsonObject);
                 }
             });
         }
-        mListViewAdapter=new ListViewDataAdapter<EvaluationEntity>(new ViewHolderCreator<EvaluationEntity>(){
+        mListViewAdapter = new ListViewDataAdapter<EvaluationEntity>(new ViewHolderCreator<EvaluationEntity>() {
 
 
             @Override
             public ViewHolderBase<EvaluationEntity> createViewHolder(int position) {
 
 
-                return new ViewHolderBase<EvaluationEntity>(){
+                return new ViewHolderBase<EvaluationEntity>() {
                     ImageView img_header;
-                    TextView tv_name, tv_type, tv_sex, tv_appointed_time, tv_charging, tv_curriculum,tv_note,tv_comment_level;
+                    TextView tv_name, tv_type, tv_sex, tv_appointed_time, tv_charging, tv_curriculum, tv_note, tv_comment_level;
+
                     //定义UI控件
                     @Override
                     public View createView(LayoutInflater layoutInflater) {
-                       // 实例化UI控件
+                        // 实例化UI控件
                         View view = layoutInflater.inflate(R.layout.evaluation_list_item, null);
                         img_header = ButterKnife.findById(view, R.id.img_header);
                         tv_name = ButterKnife.findById(view, R.id.tv_name);
@@ -148,15 +150,15 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
                     @Override
                     public void showData(int position, EvaluationEntity itemData) {
                         //数据展示set
-                        if (evaluationGroupMenuIncomplete.isChecked()){
+                        if (evaluationGroupMenuIncomplete.isChecked()) {
                             tv_note.setVisibility(View.GONE);
                             tv_comment_level.setText("评论");
-                        }else if (evaluationGroupMenuRecentCompleted.isChecked()){
+                        } else if (evaluationGroupMenuRecentCompleted.isChecked()) {
                             tv_note.setVisibility(View.VISIBLE);
                             tv_note.setText(itemData.getNote());
                             tv_comment_level.setText(itemData.getComment_level());
                         }
-                        Picasso.with(mContext).load(ApiConstants.Urls.API_BASE_URLS+itemData.getImg_header()).into(img_header);
+                        Picasso.with(mContext).load(ApiConstants.Urls.API_BASE_URLS + itemData.getImg_header()).into(img_header);
                         tv_name.setText(itemData.getName());
                         tv_type.setText(itemData.getType());
                         tv_sex.setText(itemData.getSex());
@@ -229,7 +231,7 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
             jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
         } else if (evaluationGroupMenuRecentCompleted.isChecked()) {
             jsonObject.addProperty("group_menu", "evaluationGroupMenuRecentCompleted");
-        }else {
+        } else {
             jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
         }
         evaluationPresenter.onEvaluation(Constants.EVENT_LOAD_MORE_DATA, jsonObject);
@@ -246,7 +248,7 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
             jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
         } else if (evaluationGroupMenuRecentCompleted.isChecked()) {
             jsonObject.addProperty("group_menu", "evaluationGroupMenuRecentCompleted");
-        }else {
+        } else {
             jsonObject.addProperty("group_menu", "evaluationGroupMenuIncomplete");
         }
         evaluationPresenter.onEvaluation(Constants.EVENT_REFRESH_DATA, jsonObject);
@@ -254,7 +256,7 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        EvaluationEntity evaluationEntity=(EvaluationEntity) parent.getItemAtPosition(position);
+        EvaluationEntity evaluationEntity = (EvaluationEntity) parent.getItemAtPosition(position);
         navigateToEvaluationDetail(evaluationEntity);
     }
 
@@ -294,10 +296,10 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
     }
 
 
-    @OnClick({R.id.bar_evaluation_back, R.id.evaluation_group_menu_incomplete, R.id.evaluation_group_menu_recent_completed})
+    @OnClick({R.id.top_bar_back,R.id.evaluation_group_menu_incomplete, R.id.evaluation_group_menu_recent_completed})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.bar_evaluation_back:
+            case R.id.top_bar_back:
                 finish();
                 break;
             case R.id.evaluation_group_menu_incomplete:
@@ -320,4 +322,5 @@ public class EvaluationActivity extends BaseActivity implements EvaluationView ,
                 break;
         }
     }
+
 }

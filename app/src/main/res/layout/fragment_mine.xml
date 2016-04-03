@@ -6,11 +6,7 @@
     android:orientation="vertical"
     tools:context="com.dmd.zsb.ui.fragment.MineFragment">
 
-    <include layout="@layout/bar_for_mine" />
-<!--    <FrameLayout
-        android:id="@+id/mine_loading_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">-->
+    <include layout="@layout/top_view" />
     <LinearLayout
         android:id="@+id/mine_sign_out_header"
         android:layout_width="match_parent"
@@ -20,7 +16,6 @@
         android:visibility="gone">
 
         <ImageView
-            android:id="@+id/mine_sign_out_header_img"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_gravity="center_vertical"
@@ -44,6 +39,7 @@
                     android:text="请" />
 
                 <TextView
+                    android:id="@+id/mine_sign_in"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="5dp"
@@ -63,7 +59,7 @@
         android:visibility="visible">
 
         <ImageView
-            android:id="@+id/mine_logout_header_img"
+            android:id="@+id/mine_header_img"
             android:layout_width="75dp"
             android:layout_height="75dp"
             android:layout_gravity="center_vertical"
@@ -87,18 +83,7 @@
                     android:layout_height="wrap_content"
                     android:text="蒋秋林" />
 
-                <TextView
-                    android:id="@+id/mine_job_type"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="（在校学生）" />
 
-                <TextView
-                    android:id="@+id/mine_gender"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="女"
-                    android:textSize="8sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -130,28 +115,15 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="一对一："
+                    android:text="孩子年级："
                     android:textSize="10sp" />
 
                 <TextView
-                    android:id="@+id/mine_one_to_one"
+                    android:id="@+id/mine_grade"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="75￥/小时"
+                    android:text="高中"
                     android:textSize="8sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="一对多："
-                    android:textSize="10sp" />
-
-                <TextView
-                    android:id="@+id/mine_one_to_many"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="40￥/小时"
-                    android:textSize="10sp" />
             </LinearLayout>
 
             <RelativeLayout
@@ -167,11 +139,11 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/mine_good_at_subjects_lab"
+                        android:text="弱项科目："
                         android:textSize="10sp" />
 
                     <TextView
-                        android:id="@+id/mine_good_at_subjects"
+                        android:id="@+id/mine_subjects"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:maxEms="12"
@@ -204,38 +176,47 @@
         android:orientation="horizontal"
         android:weightSum="1">
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/mine_wallet"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
+            android:orientation="horizontal"
             android:gravity="center">
 
             <TextView
-                android:id="@+id/mine_wallet"
+                android:drawableLeft="@drawable/my_wallet"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/my_wallet"
+                android:layout_marginRight="3dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="我的钱包" />
-        </RelativeLayout>
+        </LinearLayout>
 
         <View
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="#b7b7b7" />
 
-        <RelativeLayout
+        <LinearLayout
+            android:id="@+id/mine_order"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="0.5"
+            android:orientation="horizontal"
             android:gravity="center">
-
             <TextView
-                android:id="@+id/mine_order"
+                android:drawableLeft="@drawable/my_order"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:drawableLeft="@drawable/my_order"
+                android:layout_marginRight="3dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="我的订单" />
-        </RelativeLayout>
+        </LinearLayout>
 
     </LinearLayout>
 

@@ -26,7 +26,7 @@ public class OrderPresenterImpl implements OrderPresenter ,BaseMultiLoadedListen
 
     @Override
     public void onOrder(int event_tag, JsonObject jsonObject) {
-        orderInteractor.onOrder(event_tag,jsonObject);
+        orderInteractor.getCommonListData(event_tag,jsonObject);
     }
 
     @Override

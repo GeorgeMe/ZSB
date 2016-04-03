@@ -5,7 +5,7 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
 tools:context="com.dmd.zsb.ui.activity.OrderActivity">
-<include layout="@layout/bar_for_order"
+<include layout="@layout/top_view"
     android:layout_width="match_parent"
     android:layout_height="48dp"/>
 <RadioGroup

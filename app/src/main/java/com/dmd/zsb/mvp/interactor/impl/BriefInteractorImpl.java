@@ -3,7 +3,7 @@ package com.dmd.zsb.mvp.interactor.impl;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.GsonRequest;
-import com.dmd.zsb.mvp.interactor.BriefInteractor;
+import com.dmd.zsb.mvp.listeners.CommonSingleInteractor;
 import com.dmd.zsb.mvp.listeners.BaseSingleLoadedListener;
 import com.dmd.zsb.utils.UriHelper;
 import com.dmd.zsb.utils.VolleyHelper;
@@ -13,16 +13,15 @@ import com.google.gson.reflect.TypeToken;
 /**
  * Created by Administrator on 2016/3/28.
  */
-public class BriefInteractorImpl implements BriefInteractor {
+public class BriefInteractorImpl implements CommonSingleInteractor {
     private BaseSingleLoadedListener<JsonObject> loadedListener;
 
     public BriefInteractorImpl(BaseSingleLoadedListener<JsonObject> loadedListener) {
         this.loadedListener = loadedListener;
     }
-
     @Override
-    public void onChangeProfile(JsonObject jsonObject) {
-        GsonRequest<JsonObject> gsonRequest = new GsonRequest<JsonObject>(UriHelper.getInstance().changeProfile(jsonObject), null, new TypeToken<JsonObject>() {
+    public void getCommonSingleData(JsonObject gson) {
+        GsonRequest<JsonObject> gsonRequest = new GsonRequest<JsonObject>(UriHelper.getInstance().changeProfile(gson), null, new TypeToken<JsonObject>() {
         }.getType(), new Response.Listener<JsonObject>() {
             @Override
             public void onResponse(JsonObject response) {

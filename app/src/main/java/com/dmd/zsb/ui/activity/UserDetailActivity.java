@@ -23,9 +23,6 @@ import butterknife.Bind;
 
 public class UserDetailActivity extends BaseActivity implements UserDetailView,View.OnClickListener {
 
-
-    @Bind(R.id.bar_user_detail_back)
-    TextView barUserDetailBack;
     @Bind(R.id.user_img_header)
     ImageView userImgHeader;
     @Bind(R.id.user_name)
@@ -97,7 +94,6 @@ public class UserDetailActivity extends BaseActivity implements UserDetailView,V
         userAppointment.setOnClickListener(this);
         userFollow.setOnClickListener(this);
         sendMsg.setOnClickListener(this);
-        barUserDetailBack.setOnClickListener(this);
     }
 
     @Override
@@ -174,8 +170,6 @@ public class UserDetailActivity extends BaseActivity implements UserDetailView,V
             sendMsg();
         }else if(v==userFollow){
             userFollow();
-        }else if(v==barUserDetailBack){
-            finish();
         }
     }
 }

@@ -12,7 +12,7 @@
         android:scaleType="fitXY"
         android:src="@drawable/morning" />
 
-    <include layout="@layout/bar_for_about_us" />
+    <include layout="@layout/top_view" />
 
     <TextView
         android:id="@+id/about_app_name"

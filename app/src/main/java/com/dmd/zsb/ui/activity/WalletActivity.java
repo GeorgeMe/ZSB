@@ -6,14 +6,24 @@ import android.widget.TextView;
 
 import com.dmd.tutor.eventbus.EventCenter;
 import com.dmd.tutor.netstatus.NetUtils;
+import com.dmd.tutor.utils.XmlDB;
 import com.dmd.zsb.R;
+import com.dmd.zsb.mvp.presenter.impl.WalletPresenterImpl;
+import com.dmd.zsb.mvp.view.WalletView;
 import com.dmd.zsb.ui.activity.base.BaseActivity;
+import com.google.gson.JsonObject;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class WalletActivity extends BaseActivity implements View.OnClickListener {
+public class WalletActivity extends BaseActivity implements WalletView{
 
+    @Bind(R.id.top_bar_back)
+    TextView topBarBack;
+    @Bind(R.id.top_bar_title)
+    TextView topBarTitle;
+    @Bind(R.id.wallet_balance)
+    TextView walletBalance;
     @Bind(R.id.wallet_transaction_detail)
     TextView walletTransactionDetail;
     @Bind(R.id.wallet_cumulative_class)
@@ -28,9 +38,8 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     TextView walletBankCard;
     @Bind(R.id.wallet_vouchers)
     TextView walletVouchers;
-    @Bind(R.id.tv_wallet_back)
-    TextView tvWalletBack;
 
+    private WalletPresenterImpl walletPresenter;
     @Override
     protected void getBundleExtras(Bundle extras) {
 
@@ -53,12 +62,24 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void initViewsAndEvents() {
-        tvWalletBack.setOnClickListener(this);
-        walletTransactionDetail.setOnClickListener(this);
-        walletRecharge.setOnClickListener(this);
-        walletWithdrawals.setOnClickListener(this);
-        walletBankCard.setOnClickListener(this);
-        walletVouchers.setOnClickListener(this);
+        topBarTitle.setText("我的钱包");
+        walletPresenter=new WalletPresenterImpl(this,mContext);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
+        jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
+        walletPresenter.onWalletInfo(jsonObject);
+    }
+
+    @Override
+    public void setView(JsonObject jsonObject) {
+        walletBalance.setText(jsonObject.get("balance").getAsString());
+        walletCumulativeClass.setText(jsonObject.get("total_hours").getAsString());
+        walletEarnMoney.setText(jsonObject.get("total_amount").getAsString());
+    }
+
+    @Override
+    public void showTip(String msg) {
+        showToast(msg);
     }
 
     @Override
@@ -91,18 +112,27 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         return null;
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v == walletTransactionDetail) {
-
-        } else if (v == tvWalletBack) {
-            finish();
-        } else if (v == walletRecharge) {
-        } else if (v == walletWithdrawals) {
-        } else if (v == walletBankCard) {
-        } else if (v == walletVouchers) {
-
+    @OnClick({R.id.top_bar_back, R.id.wallet_transaction_detail, R.id.wallet_cumulative_class, R.id.wallet_earn_money, R.id.wallet_recharge, R.id.wallet_withdrawals, R.id.wallet_bank_card, R.id.wallet_vouchers})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.top_bar_back:
+                finish();
+                break;
+            case R.id.wallet_transaction_detail:
+                readyGo(TransactionDetailActivity.class);
+                break;
+            case R.id.wallet_recharge:
+                readyGo(RechargeActivity.class);
+                break;
+            case R.id.wallet_withdrawals:
+                readyGo(WithDrawalsActivity.class);
+                break;
+            case R.id.wallet_bank_card:
+                readyGo(BankCardActivity.class);
+                break;
+            case R.id.wallet_vouchers:
+                readyGo(VouchersActivity.class);
+                break;
         }
     }
-
 }

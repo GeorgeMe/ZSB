@@ -7,6 +7,6 @@ android:background="#dfdfdf"
 android:orientation="vertical"
 tools:context="com.dmd.zsb.ui.activity.ParentActivity">
 
-<include layout="@layout/bar_for_user_detail" />
+<include layout="@layout/top_view" />
 
 </LinearLayout>

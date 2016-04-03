@@ -1,33 +1,16 @@
 package com.dmd.zsb.ui.activity;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
 
+import com.dmd.tutor.base.BaseAppCompatActivity;
 import com.dmd.tutor.eventbus.EventCenter;
 import com.dmd.tutor.netstatus.NetUtils;
 import com.dmd.zsb.R;
 import com.dmd.zsb.ui.activity.base.BaseActivity;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
-import butterknife.OnClick;
-
-public class AboutUsActivity extends BaseActivity {
-
-
-    @Bind(R.id.top_bar_back)
-    TextView topBarBack;
-    @Bind(R.id.top_bar_title)
-    TextView topBarTitle;
-    @Bind(R.id.about_app_name)
-    TextView aboutAppName;
-    @Bind(R.id.about_slogan)
-    TextView aboutSlogan;
-    @Bind(R.id.about_version_name)
-    TextView aboutVersionName;
-    @Bind(R.id.about_web)
-    TextView aboutWeb;
+public class TransactionDetailActivity extends BaseActivity {
 
     @Override
     protected void getBundleExtras(Bundle extras) {
@@ -36,7 +19,7 @@ public class AboutUsActivity extends BaseActivity {
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.activity_about_us;
+        return R.layout.activity_transaction_detail;
     }
 
     @Override
@@ -82,10 +65,5 @@ public class AboutUsActivity extends BaseActivity {
     @Override
     protected TransitionMode getOverridePendingTransitionMode() {
         return null;
-    }
-
-    @OnClick(R.id.top_bar_back)
-    public void onClick() {
-        finish();
     }
 }

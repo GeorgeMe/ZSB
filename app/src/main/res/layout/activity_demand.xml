@@ -6,7 +6,7 @@
     android:background="#ffffff"
     android:orientation="vertical"
     tools:context="com.dmd.zsb.ui.activity.DemandActivity">
-    <include layout="@layout/bar_for_demand"/>
+    <include layout="@layout/top_view"/>
     <RadioGroup
         android:id="@+id/demand_menu_group"
         android:layout_width="match_parent"

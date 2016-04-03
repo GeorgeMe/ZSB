@@ -26,7 +26,7 @@ public class DemandPresenterImpl implements DemandPresenter,BaseMultiLoadedListe
 
     @Override
     public void onDemand(int event_tag, JsonObject jsonObject) {
-        demandInteractor.onDemand(event_tag,jsonObject);
+        demandInteractor.getCommonListData(event_tag,jsonObject);
     }
 
     @Override

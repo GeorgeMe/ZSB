@@ -16,6 +16,7 @@ import com.dmd.tutor.netstatus.NetUtils;
 import com.dmd.tutor.utils.XmlDB;
 import com.dmd.tutor.widgets.XSwipeRefreshLayout;
 import com.dmd.zsb.R;
+import com.dmd.zsb.api.ApiConstants;
 import com.dmd.zsb.common.Constants;
 import com.dmd.zsb.entity.VouchersEntity;
 import com.dmd.zsb.entity.response.VouchersResponse;
@@ -30,26 +31,25 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class VouchersActivity extends BaseActivity implements VouchersView,LoadMoreListView.OnLoadMoreListener,SwipeRefreshLayout.OnRefreshListener,AdapterView.OnItemClickListener {
+public class VouchersActivity extends BaseActivity implements VouchersView, LoadMoreListView.OnLoadMoreListener, SwipeRefreshLayout.OnRefreshListener, AdapterView.OnItemClickListener {
 
     @Bind(R.id.vouchers_list_view)
     LoadMoreListView vouchersListView;
     @Bind(R.id.vouchers_list_swipe_layout)
     XSwipeRefreshLayout vouchersListSwipeLayout;
-    @Bind(R.id.tv_vouchers_back)
-    TextView tvVouchersBack;
+    @Bind(R.id.top_bar_title)
+    TextView topBarTitle;
+    @Bind(R.id.top_bar_back)
+    TextView topBarBack;
+
 
     private VouchersPresenterImpl vouchersPresenter;
     private ListViewDataAdapter<VouchersEntity> mListViewDataAdapter;
-    private int page=0;
+    private int page =1;
+
     @Override
     protected void getBundleExtras(Bundle extras) {
-        vouchersPresenter = new VouchersPresenterImpl(mContext, this);
-        JsonObject jsonObject=new JsonObject();
-        jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
-        jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
-        jsonObject.addProperty("","");
-        vouchersPresenter.onVouchers(Constants.EVENT_REFRESH_DATA,jsonObject);
+
     }
 
     @Override
@@ -69,21 +69,28 @@ public class VouchersActivity extends BaseActivity implements VouchersView,LoadM
 
     @Override
     protected void initViewsAndEvents() {
+        topBarTitle.setText("代金券");
+        vouchersPresenter = new VouchersPresenterImpl(mContext, this);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
+        jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
+        vouchersPresenter.onVouchers(Constants.EVENT_REFRESH_DATA, jsonObject);
         mListViewDataAdapter = new ListViewDataAdapter<VouchersEntity>(new ViewHolderCreator<VouchersEntity>() {
             @Override
             public ViewHolderBase<VouchersEntity> createViewHolder(int position) {
                 return new ViewHolderBase<VouchersEntity>() {
                     ImageView img_vouchers;
+
                     @Override
                     public View createView(LayoutInflater layoutInflater) {
-                        View view=layoutInflater.inflate(R.layout.vouchers_list_item,null);
+                        View view = layoutInflater.inflate(R.layout.vouchers_list_item, null);
                         img_vouchers = ButterKnife.findById(view, R.id.img_vouchers);
                         return view;
                     }
 
                     @Override
                     public void showData(int position, VouchersEntity itemData) {
-                        Picasso.with(mContext).load(itemData.getImg_path()).into(img_vouchers);
+                        Picasso.with(mContext).load(ApiConstants.Urls.API_BASE_URLS+itemData.getImg_path()).into(img_vouchers);
                     }
                 };
             }
@@ -137,26 +144,25 @@ public class VouchersActivity extends BaseActivity implements VouchersView,LoadM
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        VouchersEntity vouchersEntity=(VouchersEntity)parent.getItemAtPosition(position);
-        navigateToVouchersDetail(position,vouchersEntity);
+        VouchersEntity vouchersEntity = (VouchersEntity) parent.getItemAtPosition(position);
+        navigateToVouchersDetail(position, vouchersEntity);
     }
 
     @Override
     public void onLoadMore() {
-        JsonObject jsonObject=new JsonObject();
+        page=page+1;
+        JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
         jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
-        jsonObject.addProperty("","");
-        vouchersPresenter.onVouchers(Constants.EVENT_LOAD_MORE_DATA,jsonObject);
+        vouchersPresenter.onVouchers(Constants.EVENT_LOAD_MORE_DATA, jsonObject);
     }
 
     @Override
     public void onRefresh() {
-        JsonObject jsonObject=new JsonObject();
+        JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("sid", XmlDB.getInstance(mContext).getKeyString("sid", "sid"));
         jsonObject.addProperty("uid", XmlDB.getInstance(mContext).getKeyString("uid", "uid"));
-        jsonObject.addProperty("","");
-        vouchersPresenter.onVouchers(Constants.EVENT_REFRESH_DATA,jsonObject);
+        vouchersPresenter.onVouchers(Constants.EVENT_REFRESH_DATA, jsonObject);
     }
 
     @Override
@@ -194,7 +200,7 @@ public class VouchersActivity extends BaseActivity implements VouchersView,LoadM
         }
     }
 
-    @OnClick(R.id.tv_vouchers_back)
+    @OnClick(R.id.top_bar_back)
     public void onClick() {
         finish();
     }

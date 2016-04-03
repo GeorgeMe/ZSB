@@ -24,7 +24,7 @@ public class NickNamePresenterImpl implements NickNamePresenter,BaseSingleLoaded
 
     @Override
     public void updateNickName(JsonObject jsonObject) {
-        nickNameInteractor.updateNickName(jsonObject);
+        nickNameInteractor.getCommonSingleData(jsonObject);
     }
 
     @Override

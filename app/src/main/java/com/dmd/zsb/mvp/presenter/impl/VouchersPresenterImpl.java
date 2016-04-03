@@ -27,7 +27,7 @@ public class VouchersPresenterImpl implements VouchersPresenter,BaseMultiLoadedL
 
     @Override
     public void onVouchers(int event_tag,JsonObject jsonObject) {
-        vouchersInteractor.onVouchers(event_tag,jsonObject);
+        vouchersInteractor.getCommonListData(event_tag,jsonObject);
     }
 
     @Override

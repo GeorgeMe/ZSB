@@ -3,8 +3,7 @@ package com.dmd.zsb.mvp.interactor.impl;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.GsonRequest;
-import com.dmd.tutor.utils.TLog;
-import com.dmd.zsb.mvp.interactor.SignInInteractor;
+import com.dmd.zsb.mvp.listeners.CommonSingleInteractor;
 import com.dmd.zsb.mvp.listeners.BaseSingleLoadedListener;
 import com.dmd.zsb.utils.UriHelper;
 import com.dmd.zsb.utils.VolleyHelper;
@@ -14,7 +13,7 @@ import com.google.gson.reflect.TypeToken;
 /**
  * Created by Administrator on 2016/3/14.
  */
-public class SignInInteractorImpl implements SignInInteractor{
+public class SignInInteractorImpl implements CommonSingleInteractor{
 
     private BaseSingleLoadedListener<JsonObject> loadedListener;
 
@@ -23,8 +22,8 @@ public class SignInInteractorImpl implements SignInInteractor{
     }
 
     @Override
-    public void signIn(JsonObject jsonObject) {
-        GsonRequest<JsonObject> gsonRequest=new GsonRequest<JsonObject>(UriHelper.getInstance().signIn(jsonObject),null,new TypeToken<JsonObject>(){}.getType(), new Response.Listener<JsonObject>(){
+    public void getCommonSingleData(JsonObject gson) {
+        GsonRequest<JsonObject> gsonRequest=new GsonRequest<JsonObject>(UriHelper.getInstance().signIn(gson),null,new TypeToken<JsonObject>(){}.getType(), new Response.Listener<JsonObject>(){
             @Override
             public void onResponse(JsonObject response) {
                 loadedListener.onSuccess(response);

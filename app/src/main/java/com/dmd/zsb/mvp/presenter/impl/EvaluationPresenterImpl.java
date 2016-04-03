@@ -27,7 +27,7 @@ public class EvaluationPresenterImpl implements EvaluationPresenter,BaseMultiLoa
 
     @Override
     public void onEvaluation(int event_tag,JsonObject jsonObject) {
-        evaluationInteractor.onEvaluation(event_tag,jsonObject);
+        evaluationInteractor.getCommonListData(event_tag,jsonObject);
     }
 
     @Override

@@ -25,7 +25,7 @@ public class SignUpVerifyPresenterImpl implements SignUpVerifyPresenter ,BaseSin
 
     @Override
     public void checkVerifyCode(JsonObject jsonObject) {
-        signUpVerifyInteractor.checkVerifyCode(jsonObject);
+        signUpVerifyInteractor.getCommonSingleData(jsonObject);
     }
 
     @Override
